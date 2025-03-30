@@ -1,0 +1,66 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Fira Sans, sans-serif;
+  font-size: 16px;
+  line-height: 1.5em;
+  color-scheme: dark light;
+  background-color: #222;
+  color: #eee;
+  margin: 0;
+}
+
+button {
+  font-family: Fira Sans, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+
+  background-color: #fff1;
+
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+
+  transition: 0.1s ease;
+}
+
+button:hover {
+  background-color: #fff2;
+  cursor: pointer;
+}
+
+button:active {
+  background-color: #fff3;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #0003;
+  color: #888;
+  cursor: default;
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: #ddd;
+    color: #111;
+  }
+
+  button {
+    background-color: #0001;
+  }
+
+  button:hover {
+    background-color: #0002;
+  }
+
+  button:active {
+    background-color: #0003;
+  }
+
+  button:disabled {
+    background-color: #fff3;
+  }
+}
