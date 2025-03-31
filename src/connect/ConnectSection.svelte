@@ -32,8 +32,10 @@
   })
 
   hid.addEventListener('disconnect', e => {
+    if (device === e.device) {
     toast.info('Device disconnected')
-    if (device === e.device) onchange(null)
+      onchange(null)
+    }
   })
 
   onMount(() => {

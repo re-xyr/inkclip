@@ -36,9 +36,13 @@
   }
 
   $effect(() => {
+    const context2x = freshContext(canvas2xEl)
+    const context1x = freshContext(canvas1xEl)
+
     if (bitmap === null) return
-    drawQuantizedData(freshContext(canvas2xEl), bitmap)
-    drawQuantizedData(freshContext(canvas1xEl), bitmap)
+
+    drawQuantizedData(context2x, bitmap)
+    drawQuantizedData(context1x, bitmap)
   })
 </script>
 

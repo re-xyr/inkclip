@@ -52,7 +52,7 @@
 
   async function renderPattern() {
     if (imageBitmap === null) {
-      onchange(null)
+      renderedBitmap = null
       return
     }
 
@@ -71,11 +71,14 @@
 
     const quantizedData = quantizer.reduce(ctx)
     renderedBitmap = quantizedData
-    onchange(quantizedData)
   }
 
   $effect(() => {
     renderPattern()
+  })
+
+  $effect(() => {
+    onchange(renderedBitmap)
   })
 </script>
 
