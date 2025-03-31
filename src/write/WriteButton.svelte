@@ -60,5 +60,5 @@
 </script>
 
 <Button onclick={connectAndWrite} variant={secondary ? 'secondary' : 'default'} {disabled}>
-  <IconUpload /> Write pattern to device
+  Write pattern to device
 </Button>

@@ -50,7 +50,7 @@
   <div>
     <div id="canvas-2x" class="bg-[#ccc] shadow-md rounded-2xl p-4 w-fit">
       <canvas
-        class="border-[1px] border-[#888] w-[402px] h-[402px]"
+        class="border-[1px] p-[6px] border-[#888] w-[414px] h-[414px]"
         style="image-rendering: pixelated"
         bind:this={canvas2xEl}
         height={200}
@@ -63,7 +63,7 @@
   <div>
     <div id="preview-1x" class="bg-[#ccc] shadow-md rounded-lg p-2 w-fit">
       <canvas
-        class="border-[1px] border-[#888] w-[202px] h-[202px]"
+        class="border-[1px] p-[3px] border-[#888] w-[208px] h-[208px]"
         style="image-rendering: pixelated"
         bind:this={canvas1xEl}
         height={200}

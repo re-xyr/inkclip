@@ -91,7 +91,7 @@
 
   <Separator />
 
-  <Button variant="secondary" class="w-full justify-start" onclick={restoreDefaultImageSettings}>
+  <Button variant="secondary" class="w-full" onclick={restoreDefaultImageSettings}>
     <IconEditOff />
     Reset All
   </Button>

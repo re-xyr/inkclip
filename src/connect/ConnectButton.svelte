@@ -31,7 +31,6 @@
 </script>
 
 <Button variant={device === null ? 'default' : 'secondary'} onclick={requestDevice}>
-  <IconPlugConnect />
   {#if device === null}
     Select device
   {:else}
