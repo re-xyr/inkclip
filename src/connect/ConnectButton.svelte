@@ -1,8 +1,6 @@
 <script lang="ts">
   import { Button } from '$lib/components/ui/button'
 
-  import IconPlugConnect from '~icons/material-symbols/plug-connect'
-
   const hid = navigator.hid
 
   interface Props {
