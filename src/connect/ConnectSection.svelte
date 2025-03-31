@@ -33,7 +33,7 @@
 
   hid.addEventListener('disconnect', e => {
     if (device === e.device) {
-    toast.info('Device disconnected')
+      toast.info('Device disconnected')
       onchange(null)
     }
   })
@@ -47,13 +47,15 @@
   <div class="grow">
     <h1 class="font-semibold text-xl/8">Connect to a device</h1>
 
-    {#if device !== null}
-      <IconCheckCircle class="inline" /> Successfully conected to device. If you want to, you can connect to another device
-      instead.
-    {:else}
-      <IconPending class="inline" /> Not connected to any device yet. Plug in your device, and click the button to select
-      it.
-    {/if}
+    <div class="text-sm">
+      {#if device === null}
+        <IconPending class="inline" /> Not connected to any device yet. Plug in your device, and click on the button to select
+        it.
+      {:else}
+        <IconCheckCircle class="inline" /> Successfully conected to device. If you want to, you can connect to another device
+        instead.
+      {/if}
+    </div>
   </div>
 
   <ConnectButton onconnect={onchange} {device} />

@@ -75,8 +75,4 @@
   .multimodal {
     @apply flex gap-1 items-end;
   }
-
-  .section-title {
-    @apply font-semibold text-xl;
-  }
 }

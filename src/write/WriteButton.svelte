@@ -2,7 +2,7 @@
   import { Button } from '$lib/components/ui/button'
   import { toast } from 'svelte-sonner'
 
-  import IconUpload from '~icons/material-symbols/upload'
+  import IconUpload from '~icons/material-symbols/upload-2'
 
   interface Props {
     device: HIDDevice | null
