@@ -1,4 +1,9 @@
 <script lang="ts">
+  import { Button } from '$lib/components/ui/button'
+  import { toast } from 'svelte-sonner'
+
+  import IconUpload from '~icons/material-symbols/upload'
+
   interface Props {
     device: HIDDevice | null
     data: number[] | null
@@ -8,6 +13,7 @@
   const { device, data, onprogress }: Props = $props()
   let inProgress = $state(false)
   let disabled = $derived(device === null || data === null || inProgress)
+  let secondary = $derived(device === null)
 
   async function connectAndWrite() {
     if (device === null || data === null) return
@@ -16,8 +22,7 @@
       try {
         await device.open()
       } catch (e) {
-        if (!(e instanceof Error)) throw e
-        alert('Unable to open device: ' + e.toString())
+        toast.error(`Unable to open device: ${e}`)
       }
     }
 
@@ -34,11 +39,19 @@
     }
 
     inProgress = true
-    setTimeout(() => {
-      inProgress = false
-    }, 2000)
 
-    await device.sendReport(0, buffer)
+    try {
+      await device.sendReport(0, buffer)
+    } catch (e) {
+      toast.error(`Error writing to device: ${e}`)
+      return
+    } finally {
+      setTimeout(() => {
+        inProgress = false
+      }, 2000)
+    }
+
+    toast.success('Wrote pattern to device')
   }
 
   $effect(() => {
@@ -46,4 +59,6 @@
   })
 </script>
 
-<button onclick={connectAndWrite} {disabled}>Write pattern to device</button>
+<Button onclick={connectAndWrite} variant={secondary ? 'secondary' : 'default'} {disabled}>
+  <IconUpload /> Write pattern to device
+</Button>

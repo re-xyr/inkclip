@@ -3,9 +3,23 @@ import type { DitheringKernel, RgbQuantImage } from 'rgbquant'
 
 export type { DitheringKernel, RgbQuantImage } from 'rgbquant'
 
+export const DEFAULT_DITHERING_KERNEL: DitheringKernel = 'FloydSteinberg'
+
+export const ditheringKernels: Record<DitheringKernel, string> = {
+  FloydSteinberg: 'Floyd-Steinberg',
+  FalseFloydSteinberg: 'False Floyd-Steinberg',
+  Stucki: 'Stucki',
+  Atkinson: 'Atkinson',
+  Jarvis: 'Jarvis',
+  Burkes: 'Burkes',
+  Sierra: 'Sierra',
+  TwoSierra: '2-Row Sierra',
+  SierraLite: 'Sierra Lite',
+}
+
 export type QuantizerOptions = {
   ditheringKernel: DitheringKernel | null
-  saturation: number
+  contrast: number
   bias: number
 }
 
@@ -15,8 +29,8 @@ export class Quantizer {
 
   private readonly rgbquant: RgbQuant
 
-  constructor({ ditheringKernel, saturation, bias }: QuantizerOptions) {
-    const saturationAdjustment = ditheringKernel === null ? 127 : 127 * saturation
+  constructor({ ditheringKernel, contrast, bias }: QuantizerOptions) {
+    const saturationAdjustment = ditheringKernel === null ? 127 : 127 * contrast
     this.white = 255 + (bias - 1) * saturationAdjustment
     this.black = (1 + bias) * saturationAdjustment
 

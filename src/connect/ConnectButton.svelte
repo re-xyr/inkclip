@@ -1,4 +1,8 @@
 <script lang="ts">
+  import { Button } from '$lib/components/ui/button'
+
+  import IconPlugConnect from '~icons/material-symbols/plug-connect'
+
   const hid = navigator.hid
 
   interface Props {
@@ -26,10 +30,11 @@
   }
 </script>
 
-<button onclick={requestDevice}>
-  {#if device == null}
-    Choose device
+<Button variant={device === null ? 'default' : 'secondary'} onclick={requestDevice}>
+  <IconPlugConnect />
+  {#if device === null}
+    Select device
   {:else}
     Connect to another device
   {/if}
-</button>
+</Button>
