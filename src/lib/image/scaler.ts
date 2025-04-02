@@ -14,7 +14,7 @@ export class Scaler {
     this.canvasAspectRatio = canvasWidth / canvasHeight
   }
 
-  fitScale(image: ImageBitmap): DrawParameters {
+  fit(image: ImageBitmap): DrawParameters {
     const { width, height } = image
     const aspectRatio = width / height
 
@@ -39,7 +39,7 @@ export class Scaler {
     }
   }
 
-  cropScale(image: ImageBitmap): DrawParameters {
+  crop(image: ImageBitmap): DrawParameters {
     const { width, height } = image
     const aspectRatio = width / height
 
@@ -64,23 +64,12 @@ export class Scaler {
     }
   }
 
-  distortScale(): DrawParameters {
+  distort(): DrawParameters {
     return {
       dx: 0,
       dy: 0,
       dWidth: this.canvasWidth,
       dHeight: this.canvasHeight,
-    }
-  }
-
-  scale(image: ImageBitmap, mode: ScaleMode) {
-    switch (mode) {
-      case 'crop':
-        return this.cropScale(image)
-      case 'fit':
-        return this.fitScale(image)
-      case 'distort':
-        return this.distortScale()
     }
   }
 }

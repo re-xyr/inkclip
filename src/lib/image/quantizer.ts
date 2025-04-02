@@ -1,21 +1,9 @@
-import RgbQuant from 'rgbquant'
-import type { DitheringKernel, RgbQuantImage } from 'rgbquant'
+import RgbQuant from '$lib/vendor/rgbquant'
+import type { DitheringKernel, RgbQuantImage } from '$lib/vendor/rgbquant'
 
-export type { DitheringKernel, RgbQuantImage } from 'rgbquant'
+export type { DitheringKernel, RgbQuantImage } from '$lib/vendor/rgbquant'
 
 export const DEFAULT_DITHERING_KERNEL: DitheringKernel = 'FloydSteinberg'
-
-export const ditheringKernels: Record<DitheringKernel, string> = {
-  FloydSteinberg: 'Floyd-Steinberg',
-  FalseFloydSteinberg: 'False Floyd-Steinberg',
-  Stucki: 'Stucki',
-  Atkinson: 'Atkinson',
-  Jarvis: 'Jarvis',
-  Burkes: 'Burkes',
-  Sierra: 'Sierra',
-  TwoSierra: '2-Row Sierra',
-  SierraLite: 'Sierra Lite',
-}
 
 export type QuantizerOptions = {
   ditheringKernel: DitheringKernel | null

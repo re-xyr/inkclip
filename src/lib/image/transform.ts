@@ -34,7 +34,9 @@ export class Transform {
   }
 }
 
-export function withCtx<T>(ctx: CanvasRenderingContext2D, pre: () => void, action: () => T): T {
+export type Context2D = CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D
+
+export function withCtx<T>(ctx: Context2D, pre: () => void, action: () => T): T {
   ctx.save()
   try {
     pre()
@@ -44,7 +46,7 @@ export function withCtx<T>(ctx: CanvasRenderingContext2D, pre: () => void, actio
   }
 }
 
-export function withTransform<T>(ctx: CanvasRenderingContext2D, transform: Transform, action: () => T): T {
+export function withTransform<T>(ctx: Context2D, transform: Transform, action: () => T): T {
   return withCtx(
     ctx,
     () => {

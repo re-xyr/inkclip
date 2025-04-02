@@ -1,4 +1,4 @@
 <svg version="1.1" width="256" height="256" xmlns="http://www.w3.org/2000/svg">
-  <polygon points="0,0 255,0 0,255" fill="#afbabc" />
-  <polygon points="255,255 255,0 0,255" fill="#182435" />
+  <polygon points="0,0 256,0 0,256" fill="#afbabc" />
+  <polygon points="256,256 256,0 0,256" fill="#182435" />
 </svg>

@@ -2,9 +2,9 @@
   import { ModeWatcher } from 'mode-watcher'
   import { Toaster } from 'svelte-sonner'
 
-  import Footer from './Footer.svelte'
-  import Main from './Main.svelte'
-  import Unsupported from './Unsupported.svelte'
+  import Footer from '$lib/layouts/Footer.svelte'
+  import Main from '$lib/layouts/Main.svelte'
+  import Unsupported from '$lib/layouts/Unsupported.svelte'
 
   const unsupported = navigator.hid === undefined
 </script>
@@ -14,8 +14,7 @@
 
 <div class="max-w-screen-xl min-h-screen m-auto p-8 flex flex-col gap-4">
   {#if unsupported}
-    <Unsupported />
-    <div class="grow"></div>
+    <Unsupported class="grow" />
   {:else}
     <Main class="grow" />
   {/if}
