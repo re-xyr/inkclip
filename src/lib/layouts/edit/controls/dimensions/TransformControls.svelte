@@ -1,12 +1,14 @@
 <script lang="ts">
+  import type { Operation } from '$lib/image/transform'
+
   import IconRotate90DegreesCw from '~icons/material-symbols/rotate-90-degrees-cw'
   import IconRotate90DegreesCcw from '~icons/material-symbols/rotate-90-degrees-ccw'
   import IconFlipHorizontal from '~icons/mdi/flip-horizontal'
   import IconFlipVertical from '~icons/mdi/flip-Vertical'
-
   import { Button } from '$lib/components/ui/button'
   import { Label } from '$lib/components/ui/label'
   import * as Tooltip from '$lib/components/ui/tooltip'
+
   import { getConversionConfig } from '$lib/contexts/config.svelte'
 
   interface Props {
@@ -16,80 +18,53 @@
   const { disabled = false }: Props = $props()
 
   const config = getConversionConfig()
+
+  const operations = {
+    cw: {
+      icon: IconRotate90DegreesCw,
+      description: 'Rotate 90° clockwise',
+    },
+    ccw: {
+      icon: IconRotate90DegreesCcw,
+      description: 'Rotate 90° counter-clockwise',
+    },
+    h: {
+      icon: IconFlipHorizontal,
+      description: 'Flip horizontally',
+    },
+    v: {
+      icon: IconFlipVertical,
+      description: 'Flip vertically',
+    },
+  }
 </script>
 
-<div class="flex flex-col gap-2">
-  <Label for="transform-controls">Transform</Label>
+<div class="stack gap-2">
+  <Label id="transform-controls-label">Transform</Label>
 
-  <div id="transform-controls">
+  <div role="group" aria-labelledby="transform-controls-label">
     <Tooltip.Provider delayDuration={0} disableHoverableContent>
-      <Tooltip.Root>
-        <Tooltip.Trigger>
-          <Button
-            {disabled}
-            size="icon"
-            variant="outline"
-            onclick={() => {
-              config.transform = config.transform.cw()
-            }}
-          >
-            <IconRotate90DegreesCw />
-          </Button>
-        </Tooltip.Trigger>
+      {#each Object.entries(operations) as [op, { icon: Icon, description }]}
+        <Tooltip.Root>
+          <Tooltip.Trigger>
+            {#snippet child({ props })}
+              <Button
+                {...props}
+                {disabled}
+                size="icon"
+                variant="outline"
+                onclick={() => {
+                  config.transform = config.transform.op(op as Operation)
+                }}
+              >
+                <Icon aria-hidden />
+              </Button>
+            {/snippet}
+          </Tooltip.Trigger>
 
-        <Tooltip.Content>Rotate 90&deg; clockwise</Tooltip.Content>
-      </Tooltip.Root>
-
-      <Tooltip.Root>
-        <Tooltip.Trigger>
-          <Button
-            {disabled}
-            size="icon"
-            variant="outline"
-            onclick={() => {
-              config.transform = config.transform.ccw()
-            }}
-          >
-            <IconRotate90DegreesCcw />
-          </Button>
-        </Tooltip.Trigger>
-
-        <Tooltip.Content>Rotate 90&deg; counter-clockwise</Tooltip.Content>
-      </Tooltip.Root>
-
-      <Tooltip.Root>
-        <Tooltip.Trigger>
-          <Button
-            {disabled}
-            size="icon"
-            variant="outline"
-            onclick={() => {
-              config.transform = config.transform.h()
-            }}
-          >
-            <IconFlipHorizontal />
-          </Button>
-        </Tooltip.Trigger>
-
-        <Tooltip.Content>Flip horizontally</Tooltip.Content>
-      </Tooltip.Root>
-
-      <Tooltip.Root>
-        <Tooltip.Trigger>
-          <Button
-            {disabled}
-            size="icon"
-            variant="outline"
-            onclick={() => {
-              config.transform = config.transform.v()
-            }}
-          >
-            <IconFlipVertical />
-          </Button>
-        </Tooltip.Trigger>
-
-        <Tooltip.Content>Flip vertically</Tooltip.Content>
-      </Tooltip.Root>
+          <Tooltip.Content>{description}</Tooltip.Content>
+        </Tooltip.Root>
+      {/each}
     </Tooltip.Provider>
   </div>
 </div>

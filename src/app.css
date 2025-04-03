@@ -69,10 +69,30 @@
     @apply bg-background text-foreground;
     font-family: IBM Plex Sans Variable, IBM Plex Sans, Fira Sans, sans-serif;
   }
+
+  ::selection {
+    @apply text-muted bg-muted-foreground;
+  }
+
+  a {
+    @apply underline;
+  }
 }
 
 @layer utilities {
-  .multimodal {
-    @apply flex gap-1 items-end;
+  .stack {
+    @apply flex flex-col;
+  }
+
+  .stack-h {
+    @apply flex;
+  }
+
+  .row {
+    @apply flex items-center;
+  }
+
+  .col {
+    @apply flex flex-col items-center;
   }
 }

@@ -12,11 +12,11 @@
 <ModeWatcher />
 <Toaster position="bottom-center" duration={2000} />
 
-<div class="max-w-screen-xl min-h-screen m-auto p-8 flex flex-col gap-4">
+<div class="max-w-screen-xl min-h-screen m-auto p-8 stack gap-4">
   {#if unsupported}
-    <Unsupported class="grow" />
+    <Unsupported />
   {:else}
-    <Main class="grow" />
+    <Main />
   {/if}
   <Footer />
 </div>

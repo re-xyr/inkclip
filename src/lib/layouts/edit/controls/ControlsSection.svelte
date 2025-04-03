@@ -1,15 +1,10 @@
 <script lang="ts">
-  import IconEditOff from '~icons/material-symbols/edit-off'
-
-  import type { HTMLAttributes } from 'svelte/elements'
-  import { cn } from '$lib/utils'
-
   import { DEFAULT_DITHERING_KERNEL } from '$lib/image/quantizer'
   import { Transform } from '$lib/image/transform'
 
   import { Button } from '$lib/components/ui/button'
   import Separator from '$lib/components/ui/separator/separator.svelte'
-
+  import IconEditOff from '~icons/material-symbols/edit-off'
   import AspectRatioAlert from './dimensions/AspectRatioAlert.svelte'
   import ScaleModeToggleGroup from './dimensions/ScaleModeToggleGroup.svelte'
   import TransformControls from './dimensions/TransformControls.svelte'
@@ -17,21 +12,18 @@
   import DitherControls from './conversion/dither/DitherControls.svelte'
   import ContrastSlider from './conversion/ContrastSlider.svelte'
   import BiasSlider from './conversion/BiasSlider.svelte'
-  import { getBitmapContext } from '$lib/contexts/bitmap.svelte'
+
   import { getConversionConfig } from '$lib/contexts/config.svelte'
+  import { getImageContext } from '$lib/contexts/image.svelte'
 
-  interface Props extends HTMLAttributes<HTMLElement> {}
-
-  const { class: className, ...restProps }: Props = $props()
-
-  const bitmapCtx = getBitmapContext()
+  const imageCtx = getImageContext()
   const config = getConversionConfig()
 
-  const transformDisabled = $derived(bitmapCtx.image === null)
+  const transformDisabled = $derived(imageCtx.image === null)
 
   function imageNonSquare() {
-    if (bitmapCtx.image === null) return false
-    return bitmapCtx.image.height !== bitmapCtx.image.width
+    if (imageCtx.image === null) return false
+    return imageCtx.image.height !== imageCtx.image.width
   }
 
   function restoreDefaultImageSettings() {
@@ -44,14 +36,14 @@
   }
 </script>
 
-<section class={cn('flex flex-col gap-4', className)} {...restProps}>
-  <h1 class="font-semibold text-xl/6">Edit image</h1>
+<section class="grow stack gap-4" aria-labelledby="controls-section-label">
+  <h2 class="font-semibold text-xl/6" id="controls-section-label">Edit image</h2>
 
   {#if imageNonSquare()}
     <AspectRatioAlert />
   {/if}
 
-  <div class="flex gap-4">
+  <div class="row gap-4">
     {#if imageNonSquare()}
       <ScaleModeToggleGroup />
     {/if}
@@ -78,7 +70,7 @@
   <Separator />
 
   <Button variant="secondary" class="w-full" onclick={restoreDefaultImageSettings}>
-    <IconEditOff />
+    <IconEditOff aria-hidden />
     Reset All
   </Button>
 </section>

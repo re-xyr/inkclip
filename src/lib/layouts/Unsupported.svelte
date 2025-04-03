@@ -1,20 +1,10 @@
 <script lang="ts">
   import IconDisabledByDefault from '~icons/material-symbols/disabled-by-default'
 
-  import type { HTMLAttributes } from 'svelte/elements'
-  import { cn } from '$lib/utils'
-
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
-
-  interface Props extends HTMLAttributes<HTMLElement> {}
-
-  const { class: classNames, ...restProps }: Props = $props()
 </script>
 
-<main
-  class={cn('flex items-center justify-center gap-2 font-medium text-xl text-muted-foreground', classNames)}
-  {...restProps}
->
+<main class="grow row justify-center gap-2 font-medium text-xl text-muted-foreground">
   <IconDisabledByDefault />
   <div>Not Supported</div>
 </main>
@@ -25,11 +15,14 @@
     <AlertDialog.Content>
       <AlertDialog.Title>Browser not supported</AlertDialog.Title>
 
-      <AlertDialog.Description>
-        <p class="mb-2">Write to Inkclip uses the WebHID API, which is not supported by your browser.</p>
+      <AlertDialog.Description class="stack gap-2">
+        <p>Write to Inkclip uses the WebHID API, which is not supported by your browser.</p>
         <p>
-          We recommend using a Chromium-based browser, such as a recent version of Google Chrome, Microsoft Edge, Opera,
-          or Arc.
+          We recommend using a Chromium-based browser, such as a recent version of
+          <a href="https://www.google.com/chrome/">Google Chrome</a>,
+          <a href="https://www.microsoft.com/edge">Microsoft Edge</a>,
+          <a href="https://www.opera.com/">Opera</a>, or
+          <a href="https://arc.net/">Arc</a>.
         </p>
       </AlertDialog.Description>
     </AlertDialog.Content>

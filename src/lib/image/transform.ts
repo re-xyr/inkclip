@@ -1,5 +1,6 @@
 export type Rotation = 0 | 90 | 180 | 270
 export type Side = 'obverse' | 'reverse'
+export type Operation = 'cw' | 'ccw' | 'h' | 'v'
 
 /**
  * A transform of a square image is represented by first rotating it by a multiple of 90 degrees, and then optionally
@@ -32,11 +33,15 @@ export class Transform {
     const newAngle = (this.rotation + 180) % 360
     return new Transform(newSide, newAngle as Rotation)
   }
+
+  op(op: Operation): Transform {
+    return this[op]()
+  }
 }
 
 export type Context2D = CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D
 
-export function withCtx<T>(ctx: Context2D, pre: () => void, action: () => T): T {
+function withCtx<T>(ctx: Context2D, pre: () => void, action: () => T): T {
   ctx.save()
   try {
     pre()

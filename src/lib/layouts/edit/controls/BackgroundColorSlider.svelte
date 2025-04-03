@@ -1,25 +1,26 @@
 <script lang="ts">
   import { Label } from '$lib/components/ui/label'
   import { Slider } from '$lib/components/ui/slider'
-  import Infotip from '$lib/components/Infotip.svelte'
+  import MoreInfo from '$lib/components/MoreInfo.svelte'
+
   import { getConversionConfig } from '$lib/contexts/config.svelte'
 
   const config = getConversionConfig()
+
+  let value = $derived(config.backgroundColor)
 </script>
 
-<div class="flex flex-col gap-4">
-  <Label id="background-color-input-label" class="multimodal">
-    Background Color
-    <span class="font-normal text-muted-foreground"> = {config.backgroundColor} </span>
-    <Infotip>The color used for transparent pixels.</Infotip>
-  </Label>
+<div class="stack gap-4" role="group" aria-label="Background color">
+  <div class="row gap-1 text-sm">
+    <Label id="background-color-input-label">Background Color</Label>
+    <span class="font-normal text-muted-foreground"> = {value} </span>
+    <MoreInfo>The color used for transparent pixels.</MoreInfo>
+  </div>
 
   <Slider
     type="single"
-    value={config.backgroundColor}
-    onValueCommit={v => {
-      config.backgroundColor = v
-    }}
+    bind:value
+    onValueCommit={() => (config.backgroundColor = value)}
     min={0}
     max={255}
     step={1}

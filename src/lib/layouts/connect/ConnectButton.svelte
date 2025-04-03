@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Button } from '$lib/components/ui/button'
+
   import { getDeviceContext } from '$lib/contexts/device.svelte'
 
   const deviceCtx = getDeviceContext()
@@ -14,10 +15,7 @@
       ],
     })
 
-    if (devs == undefined || devs[0] == undefined) {
-      return
-    }
-
+    if (devs == undefined || devs[0] == undefined) return
     deviceCtx.device = devs[0]
   }
 </script>

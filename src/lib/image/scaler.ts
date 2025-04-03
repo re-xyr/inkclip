@@ -72,4 +72,8 @@ export class Scaler {
       dHeight: this.canvasHeight,
     }
   }
+
+  scale(mode: ScaleMode, image: ImageBitmap): DrawParameters {
+    return this[mode](image)
+  }
 }

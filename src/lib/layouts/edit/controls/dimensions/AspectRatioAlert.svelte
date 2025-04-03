@@ -4,7 +4,7 @@
 </script>
 
 <Alert.Root>
-  <IconAspectRatio />
+  <IconAspectRatio aria-hidden />
   <Alert.Title>Image is not 1:1 ratio</Alert.Title>
   <Alert.Description>You need to choose how to scale your image.</Alert.Description>
 </Alert.Root>

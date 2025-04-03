@@ -1,25 +1,23 @@
 <script lang="ts">
   import { Switch } from '$lib/components/ui/switch'
   import { Label } from '$lib/components/ui/label'
-  import Infotip from '$lib/components/Infotip.svelte'
+  import MoreInfo from '$lib/components/MoreInfo.svelte'
 
   interface Props {
     checked: boolean
-    onCheckedChange: (checked: boolean) => void
+    onchange: (checked: boolean) => void
   }
 
-  let { checked, onCheckedChange }: Props = $props()
+  let { checked, onchange }: Props = $props()
 </script>
 
-<div class="flex flex-col gap-2">
-  <div>
-    <Label for="dither-switch" class="multimodal">
-      <div>Dither</div>
-      <Infotip>Dithering uses different dot densities to simulate shades of gray.</Infotip>
-    </Label>
+<div class="stack gap-2" role="group" aria-label="Dither">
+  <div class="row gap-1">
+    <Label id="dither-switch-label">Dither</Label>
+    <MoreInfo>Dithering uses different dot densities to simulate shades of gray.</MoreInfo>
   </div>
 
-  <div class="grow flex items-center">
-    <Switch id="dither-switch" {checked} {onCheckedChange} />
+  <div class="grow row items-center">
+    <Switch {checked} onCheckedChange={onchange} aria-labelledby="dither-switch-label" />
   </div>
 </div>

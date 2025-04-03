@@ -1,8 +1,10 @@
 <script lang="ts">
   import { DEFAULT_DITHERING_KERNEL, type DitheringKernel } from '$lib/image/quantizer'
-  import { getConversionConfig } from '$lib/contexts/config.svelte'
+
   import DitheringKernelDropdown from './DitheringKernelDropdown.svelte'
   import DitherSwitch from './DitherSwitch.svelte'
+
+  import { getConversionConfig } from '$lib/contexts/config.svelte'
 
   const config = getConversionConfig()
 
@@ -14,20 +16,14 @@
   })
 </script>
 
-<div class="flex gap-4">
+<div class="stack-h gap-4">
   <DitherSwitch
     checked={config.ditheringKernel !== null}
-    onCheckedChange={c => {
-      if (c) {
-        config.ditheringKernel = lastDitheringKernel
-      } else {
-        config.ditheringKernel = null
-      }
-    }}
+    onchange={c => (config.ditheringKernel = c ? lastDitheringKernel : null)}
   />
 
   <DitheringKernelDropdown
-    class={config.ditheringKernel !== null ? [] : ['invisible']}
+    hidden={config.ditheringKernel === null}
     value={lastDitheringKernel}
     onchange={v => {
       config.ditheringKernel = v

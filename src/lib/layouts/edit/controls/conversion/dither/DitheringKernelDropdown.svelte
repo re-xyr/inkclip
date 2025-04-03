@@ -1,19 +1,19 @@
 <script lang="ts">
-  import type { HTMLAttributes } from 'svelte/elements'
-  import { cn } from '$lib/utils'
-
   import { type DitheringKernel } from '$lib/image/quantizer'
 
   import { Label } from '$lib/components/ui/label'
   import * as Select from '$lib/components/ui/select'
-  import Infotip from '$lib/components/Infotip.svelte'
+  import MoreInfo from '$lib/components/MoreInfo.svelte'
 
-  interface Props extends Omit<HTMLAttributes<HTMLDivElement>, 'onchange'> {
+  import { cn } from '$lib/utils'
+
+  interface Props {
+    hidden: boolean
     value: DitheringKernel
     onchange: (v: DitheringKernel) => void
   }
 
-  let { value, onchange, class: classNames, ...restProps }: Props = $props()
+  const { hidden, value, onchange }: Props = $props()
 
   const ditheringKernels: Record<DitheringKernel, string> = {
     FloydSteinberg: 'Floyd-Steinberg',
@@ -28,18 +28,18 @@
   }
 </script>
 
-<div class={cn('grow flex flex-col gap-2', classNames)} {...restProps}>
-  <Label class="multimodal">
-    <div>Dithering Kernel</div>
+<div class={cn('grow stack gap-2', hidden ? ['invisible'] : [])} role="group" aria-label="Dithering kernel">
+  <div class="row gap-1">
+    <Label id="dithering-kernel-select-label">Dithering Kernel</Label>
 
-    <Infotip>
+    <MoreInfo>
       Algorithm used for dithering. <br />
       Switch around to see which one works best for your image.
-    </Infotip>
-  </Label>
+    </MoreInfo>
+  </div>
 
   <Select.Root type="single" {value} onValueChange={v => onchange(v as DitheringKernel)}>
-    <Select.Trigger>{ditheringKernels[value]}</Select.Trigger>
+    <Select.Trigger aria-labelledby="dithering-kernel-select-label">{ditheringKernels[value]}</Select.Trigger>
     <Select.Content>
       {#each Object.entries(ditheringKernels) as [kernel, name]}
         <Select.Item value={kernel}>{name}</Select.Item>

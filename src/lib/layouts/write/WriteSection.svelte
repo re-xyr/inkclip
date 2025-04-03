@@ -3,37 +3,33 @@
   import IconPending from '~icons/material-symbols/pending'
   import IconArrowUploadProgress from '~icons/material-symbols/arrow-upload-progress'
   import IconWarning from '~icons/material-symbols/warning'
-
   import WriteButton from './WriteButton.svelte'
+
   import { getDeviceContext } from '$lib/contexts/device.svelte'
-  import { getBitmapContext } from '$lib/contexts/bitmap.svelte'
+  import { getImageContext } from '$lib/contexts/image.svelte'
 
   const deviceCtx = getDeviceContext()
-  const bitmapCtx = getBitmapContext()
+  const imageCtx = getImageContext()
 
   let inProgress = $state(false)
 </script>
 
-<section class="flex items-center gap-2 max-lg:flex-col max-lg:items-stretch">
+<section class="row gap-2 max-lg:stack max-lg:items-stretch" aria-labelledby="write-section-label">
   <div class="grow">
-    <h1 class="font-semibold text-xl/8">Write pattern to device</h1>
+    <h2 class="font-semibold text-xl/8" id="write-section-label">Write pattern to device</h2>
 
-    <div class="text-sm">
+    <div class="row gap-1 text-sm">
       {#if deviceCtx.device === null}
-        <IconHelp class="inline" /> To start writing patterns to your device, connect it first.
-      {:else if bitmapCtx.image === null}
-        <IconPending class="inline" /> Select an image file in order to write it onto your device.
+        <IconHelp aria-hidden /> To start writing patterns to your device, connect it first.
+      {:else if imageCtx.image === null}
+        <IconPending aria-hidden /> Select an image file in order to write it onto your device.
       {:else if !inProgress}
-        <IconArrowUploadProgress class="inline" /> Write the pattern onto your device if you have finished editing the image.
+        <IconArrowUploadProgress aria-hidden /> Write the pattern onto your device if you have finished editing the image.
       {:else}
-        <IconWarning class="inline" /> Refresh in progress. Do not disconnect device.
+        <IconWarning aria-hidden /> Refresh in progress. Do not disconnect device.
       {/if}
     </div>
   </div>
 
-  <WriteButton
-    onprogress={v => {
-      inProgress = v
-    }}
-  />
+  <WriteButton onprogress={v => (inProgress = v)} />
 </section>
