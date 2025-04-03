@@ -12,7 +12,7 @@
   <div class="grow">
     <h2 class="font-semibold text-xl/8" id="connect-section-label">Connect to a device</h2>
 
-    <div class="row gap-1 text-sm">
+    <div class="row gap-1 text-sm" aria-live="polite">
       {#if deviceCtx.device === null}
         <IconPending aria-hidden /> Not connected to any device yet. Plug in your device, and click on the button to select
         it.
