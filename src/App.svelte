@@ -12,7 +12,7 @@
 <ModeWatcher />
 <Toaster position="bottom-center" duration={2000} />
 
-<div class="max-w-screen-xl min-h-screen m-auto p-8 stack gap-4">
+<div class="max-w-screen-xl min-h-dvh m-auto p-8 stack gap-4">
   {#if unsupported}
     <Unsupported />
   {:else}

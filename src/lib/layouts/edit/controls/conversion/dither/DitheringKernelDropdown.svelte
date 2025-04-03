@@ -28,7 +28,11 @@
   }
 </script>
 
-<div class={cn('grow stack gap-2', hidden ? ['invisible'] : [])} role="group" aria-label="Dithering kernel">
+<div
+  class={cn('grow stack gap-2', hidden ? ['invisible'] : [])}
+  role="group"
+  aria-labelledby="dithering-kernel-select-label"
+>
   <div class="row gap-1">
     <Label id="dithering-kernel-select-label">Dithering Kernel</Label>
 

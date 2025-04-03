@@ -11,7 +11,7 @@
   let { checked, onchange }: Props = $props()
 </script>
 
-<div class="stack gap-2" role="group" aria-label="Dither">
+<div class="stack gap-2" role="group" aria-labelledby="dither-switch-label">
   <div class="row gap-1">
     <Label id="dither-switch-label">Dither</Label>
     <MoreInfo>Dithering uses different dot densities to simulate shades of gray.</MoreInfo>

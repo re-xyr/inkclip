@@ -1,8 +1,9 @@
+import { INKCLIP_PID, INKCLIP_VID } from '$lib/constants'
 import { getContext, setContext } from 'svelte'
 import { toast } from 'svelte-sonner'
 
 function isInkclip(dev: HIDDevice) {
-  return dev.vendorId == 0xc0de && dev.productId == 0xcafe
+  return dev.vendorId == INKCLIP_VID && dev.productId == INKCLIP_PID
 }
 
 export interface DeviceContext {

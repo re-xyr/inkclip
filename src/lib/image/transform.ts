@@ -1,3 +1,5 @@
+import { INKCLIP_HEIGHT, INKCLIP_WIDTH } from '$lib/constants'
+
 export type Rotation = 0 | 90 | 180 | 270
 export type Side = 'obverse' | 'reverse'
 export type Operation = 'cw' | 'ccw' | 'h' | 'v'
@@ -52,15 +54,18 @@ function withCtx<T>(ctx: Context2D, pre: () => void, action: () => T): T {
 }
 
 export function withTransform<T>(ctx: Context2D, transform: Transform, action: () => T): T {
+  const centerX = INKCLIP_WIDTH / 2
+  const centerY = INKCLIP_HEIGHT / 2
+
   return withCtx(
     ctx,
     () => {
-      ctx.translate(100, 100)
+      ctx.translate(centerX, centerY)
       if (transform.side === 'reverse') {
         ctx.scale(-1, 1)
       }
       ctx.rotate((transform.rotation / 180) * Math.PI)
-      ctx.translate(-100, -100)
+      ctx.translate(-centerX, -centerY)
     },
     action
   )

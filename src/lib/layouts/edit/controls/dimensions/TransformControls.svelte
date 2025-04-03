@@ -57,7 +57,7 @@
                   config.transform = config.transform.op(op as Operation)
                 }}
               >
-                <Icon aria-hidden />
+                <Icon aria-label={description} />
               </Button>
             {/snippet}
           </Tooltip.Trigger>

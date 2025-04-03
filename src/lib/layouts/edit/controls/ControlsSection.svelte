@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { DEFAULT_DITHERING_KERNEL } from '$lib/image/quantizer'
   import { Transform } from '$lib/image/transform'
 
   import { Button } from '$lib/components/ui/button'
@@ -15,6 +14,8 @@
 
   import { getConversionConfig } from '$lib/contexts/config.svelte'
   import { getImageContext } from '$lib/contexts/image.svelte'
+  import { INKCLIP_HEIGHT, INKCLIP_WIDTH } from '$lib/constants'
+  import { DEFAULT_DITHERING_KERNEL } from '$lib/image/quantizer'
 
   const imageCtx = getImageContext()
   const config = getConversionConfig()
@@ -23,13 +24,13 @@
 
   function imageNonSquare() {
     if (imageCtx.image === null) return false
-    return imageCtx.image.height !== imageCtx.image.width
+    return imageCtx.image.height * INKCLIP_WIDTH !== imageCtx.image.width * INKCLIP_HEIGHT
   }
 
   function restoreDefaultImageSettings() {
     config.scaleMode = 'fit'
     config.transform = new Transform()
-    config.backgroundColor = 255
+    config.backgroundColor = 0xff
     config.ditheringKernel = DEFAULT_DITHERING_KERNEL
     config.contrast = 0
     config.bias = 0

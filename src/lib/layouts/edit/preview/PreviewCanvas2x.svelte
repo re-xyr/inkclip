@@ -6,6 +6,7 @@
   import { drawQuantizedData, freshContext } from './common.svelte'
   import { getFilesContext } from '$lib/contexts/files.svelte'
   import { getRenderedContext } from '$lib/contexts/rendered.svelte'
+  import { INKCLIP_HEIGHT, INKCLIP_WIDTH } from '$lib/constants'
 
   interface Props {
     fileInputEl: HTMLInputElement | null
@@ -43,11 +44,13 @@
   >
     <div class="p-[6px] border-[1px] border-[#888]">
       <canvas
-        class={cn('w-[400px] h-[400px]', hasRendered || 'hidden')}
+        class={cn(hasRendered || 'hidden')}
         style:image-rendering="pixelated"
+        style:width="{INKCLIP_WIDTH * 2}px"
+        style:height="{INKCLIP_HEIGHT * 2}px"
         bind:this={canvasEl}
-        height={200}
-        width={200}
+        height={INKCLIP_HEIGHT}
+        width={INKCLIP_WIDTH}
       ></canvas>
       {#if !hasRendered}
         <button
@@ -55,9 +58,11 @@
           ondragleave={() => (fileOverDragZone = false)}
           ondragover={() => (fileOverDragZone = true)}
           class={cn(
-            'col justify-center w-[400px] h-[400px] rounded-xl hover:cursor-pointer text-muted',
+            `col justify-center rounded-xl hover:cursor-pointer text-muted`,
             fileOverDragZone && 'outline-dashed',
           )}
+          style:width="{INKCLIP_WIDTH * 2}px"
+          style:height="{INKCLIP_HEIGHT * 2}px"
           tabindex={-1}
           aria-label="Choose file"
         >

@@ -12,4 +12,4 @@
   const filesCtx = getFilesContext()
 </script>
 
-<Input bind:ref type="file" accept="image/*" bind:files={filesCtx.files} />
+<Input bind:ref type="file" accept="image/*" bind:files={filesCtx.files} aria-labelledby="preview-section-label" />

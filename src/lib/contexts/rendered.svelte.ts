@@ -4,6 +4,7 @@ import { withTransform } from '$lib/image/transform'
 import type { ConversionConfig } from './config.svelte'
 import { Scaler } from '$lib/image/scaler'
 import { Quantizer } from '$lib/image/quantizer'
+import { INKCLIP_HEIGHT, INKCLIP_WIDTH } from '$lib/constants'
 
 export interface RenderedContext {
   rendered: number[] | null
@@ -15,7 +16,7 @@ export function getRenderedContext(): Readonly<RenderedContext> {
   return getContext(RenderedContextToken)
 }
 
-const scaler = new Scaler(200, 200)
+const scaler = new Scaler(INKCLIP_WIDTH, INKCLIP_HEIGHT)
 
 export function createRenderedContext(
   imageCtx: Readonly<ImageContext>,
@@ -33,7 +34,7 @@ export function createRenderedContext(
     })
   )
 
-  const canvas = new OffscreenCanvas(200, 200)
+  const canvas = new OffscreenCanvas(INKCLIP_WIDTH, INKCLIP_HEIGHT)
   const canvasCtx = canvas.getContext('2d', {
     willReadFrequently: true,
   })!
@@ -49,7 +50,7 @@ export function createRenderedContext(
     withTransform(canvasCtx, config.transform, () => {
       const bg = config.backgroundColor
       canvasCtx.fillStyle = `rgb(${bg} ${bg} ${bg})`
-      canvasCtx.fillRect(0, 0, 200, 200)
+      canvasCtx.fillRect(0, 0, INKCLIP_WIDTH, INKCLIP_HEIGHT)
       const { dx, dy, dWidth, dHeight } = scaler.scale(config.scaleMode, bitmap)
       canvasCtx.drawImage(bitmap, dx, dy, dWidth, dHeight)
     })
