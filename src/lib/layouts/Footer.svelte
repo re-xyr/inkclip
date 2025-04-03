@@ -8,7 +8,8 @@
 
 <footer class="row text-sm text-muted-foreground">
   <div class="grow">
-    2025 &copy; <a class="no-underline hover:underline" href="https://dayli.ly">daylily</a>
+    {new Date().getFullYear()} &copy;
+    <a class="no-underline hover:underline" href="https://dayli.ly">daylily</a>
   </div>
   <Button size="icon" variant="ghost" onclick={toggleMode} aria-label="Toggle color scheme">
     {#if $mode === 'dark'}
