@@ -1,4 +1,4 @@
-import { INKCLIP_HEIGHT, INKCLIP_WIDTH } from '$lib/constants'
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from '$lib/constants'
 
 export type Rotation = 0 | 90 | 180 | 270
 export type Side = 'obverse' | 'reverse'
@@ -54,8 +54,8 @@ function withCtx<T>(ctx: Context2D, pre: () => void, action: () => T): T {
 }
 
 export function withTransform<T>(ctx: Context2D, transform: Transform, action: () => T): T {
-  const centerX = INKCLIP_WIDTH / 2
-  const centerY = INKCLIP_HEIGHT / 2
+  const centerX = DEVICE_WIDTH / 2
+  const centerY = DEVICE_HEIGHT / 2
 
   return withCtx(
     ctx,

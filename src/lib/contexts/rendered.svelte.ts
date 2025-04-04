@@ -4,7 +4,7 @@ import { withTransform } from '$lib/image/transform'
 import type { ConversionConfig } from './config.svelte'
 import { Scaler } from '$lib/image/scaler'
 import { Quantizer } from '$lib/image/quantizer'
-import { INKCLIP_HEIGHT, INKCLIP_WIDTH } from '$lib/constants'
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from '$lib/constants'
 
 export interface RenderedContext {
   rendered: number[] | null
@@ -16,7 +16,7 @@ export function getRenderedContext(): Readonly<RenderedContext> {
   return getContext(RenderedContextToken)
 }
 
-const scaler = new Scaler(INKCLIP_WIDTH, INKCLIP_HEIGHT)
+const scaler = new Scaler(DEVICE_WIDTH, DEVICE_HEIGHT)
 
 export function createRenderedContext(
   imageCtx: Readonly<ImageContext>,
@@ -34,7 +34,7 @@ export function createRenderedContext(
     })
   )
 
-  const canvas = new OffscreenCanvas(INKCLIP_WIDTH, INKCLIP_HEIGHT)
+  const canvas = new OffscreenCanvas(DEVICE_WIDTH, DEVICE_HEIGHT)
   const canvasCtx = canvas.getContext('2d', {
     willReadFrequently: true,
   })!
@@ -50,7 +50,7 @@ export function createRenderedContext(
     withTransform(canvasCtx, config.transform, () => {
       const bg = config.backgroundColor
       canvasCtx.fillStyle = `rgb(${bg} ${bg} ${bg})`
-      canvasCtx.fillRect(0, 0, INKCLIP_WIDTH, INKCLIP_HEIGHT)
+      canvasCtx.fillRect(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)
       const { dx, dy, dWidth, dHeight } = scaler.scale(config.scaleMode, bitmap)
       canvasCtx.drawImage(bitmap, dx, dy, dWidth, dHeight)
     })

@@ -4,7 +4,7 @@
   import { toast } from 'svelte-sonner'
   import { getDeviceContext } from '$lib/contexts/device.svelte'
   import { getRenderedContext } from '$lib/contexts/rendered.svelte'
-  import { BYTES_IN_A_ROW, INKCLIP_HEIGHT, INKCLIP_WIDTH, WRITE_TIME } from '$lib/constants'
+  import { BYTES_IN_A_ROW, DEVICE_HEIGHT, DEVICE_WIDTH, WRITE_TIME } from '$lib/constants'
 
   interface Props {
     onprogress: (inPropgress: boolean) => void
@@ -32,12 +32,12 @@
       }
     }
 
-    const buffer = new Uint8Array(INKCLIP_HEIGHT * BYTES_IN_A_ROW)
-    for (let y = 0; y < INKCLIP_HEIGHT; y++) {
+    const buffer = new Uint8Array(DEVICE_HEIGHT * BYTES_IN_A_ROW)
+    for (let y = 0; y < DEVICE_HEIGHT; y++) {
       for (let xStride = 0; xStride < BYTES_IN_A_ROW; xStride++) {
         let cell = 0x0
         for (let xStroll = 0; xStroll < 8; xStroll++) {
-          const index = y * INKCLIP_WIDTH + xStride * 8 + xStroll
+          const index = y * DEVICE_WIDTH + xStride * 8 + xStroll
           cell |= renderedCtx.rendered[index] << xStroll
         }
         buffer[y * BYTES_IN_A_ROW + xStride] = cell

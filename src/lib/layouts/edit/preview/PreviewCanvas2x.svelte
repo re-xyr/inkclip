@@ -5,7 +5,7 @@
   import { cn } from '$lib/utils'
   import { drawQuantizedData, freshContext, makeAltText } from './common.svelte'
   import { getRenderedContext } from '$lib/contexts/rendered.svelte'
-  import { INKCLIP_HEIGHT, INKCLIP_WIDTH } from '$lib/constants'
+  import { DEVICE_HEIGHT, DEVICE_WIDTH } from '$lib/constants'
   import { getFilesContext } from '$lib/contexts/files.svelte'
   import { getConversionConfig } from '$lib/contexts/config.svelte'
   import { getImageContext } from '$lib/contexts/image.svelte'
@@ -33,17 +33,17 @@
         <canvas
           class={cn(hasRendered || 'hidden')}
           style:image-rendering="pixelated"
-          style:width="{INKCLIP_WIDTH * 2}px"
-          style:height="{INKCLIP_HEIGHT * 2}px"
+          style:width="{DEVICE_WIDTH * 2}px"
+          style:height="{DEVICE_HEIGHT * 2}px"
           bind:this={canvasEl}
-          height={INKCLIP_HEIGHT}
-          width={INKCLIP_WIDTH}
+          height={DEVICE_HEIGHT}
+          width={DEVICE_WIDTH}
         ></canvas>
       {:else}
         <div
           class="col justify-center text-[#333]"
-          style:width="{INKCLIP_WIDTH * 2}px"
-          style:height="{INKCLIP_HEIGHT * 2}px"
+          style:width="{DEVICE_WIDTH * 2}px"
+          style:height="{DEVICE_HEIGHT * 2}px"
         >
           <IconHideImage class="text-6xl" aria-label="No image" />
         </div>

@@ -1,4 +1,4 @@
-import { INKCLIP_HEIGHT, INKCLIP_WIDTH } from '$lib/constants'
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from '$lib/constants'
 import type { ConversionConfig } from '$lib/contexts/config.svelte'
 import type { FilesContext } from '$lib/contexts/files.svelte'
 import { imageIsCorrectRatio, type ImageContext } from '$lib/contexts/image.svelte'
@@ -14,7 +14,7 @@ export function makeAltText(filesCtx: FilesContext, imageCtx: ImageContext, conf
 
   const file = filesCtx.files[0]
 
-  const output = [`${INKCLIP_WIDTH}-by-${INKCLIP_HEIGHT}-pixels e-paper preview of "${file.name}"`]
+  const output = [`${DEVICE_WIDTH}-by-${DEVICE_HEIGHT}-pixels e-paper preview of "${file.name}"`]
 
   if (!imageIsCorrectRatio(imageCtx)) {
     if (config.scaleMode === 'fit') output.push('letterboxed')
@@ -51,11 +51,11 @@ export function makeAltText(filesCtx: FilesContext, imageCtx: ImageContext, conf
 }
 
 export function drawQuantizedData(ctx: CanvasRenderingContext2D, data: number[]) {
-  const imageData = ctx.createImageData(INKCLIP_WIDTH, INKCLIP_HEIGHT)
+  const imageData = ctx.createImageData(DEVICE_WIDTH, DEVICE_HEIGHT)
 
-  for (let y = 0; y < INKCLIP_HEIGHT; y++) {
-    for (let x = 0; x < INKCLIP_WIDTH; x++) {
-      const dataIx = y * INKCLIP_WIDTH + x
+  for (let y = 0; y < DEVICE_HEIGHT; y++) {
+    for (let x = 0; x < DEVICE_WIDTH; x++) {
+      const dataIx = y * DEVICE_WIDTH + x
       const bitmapIx = dataIx * 4
       const colorIx = data.at(dataIx)
       const color = colorIx === 0 ? 0xcc : 0x11

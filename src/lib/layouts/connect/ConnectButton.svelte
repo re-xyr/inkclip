@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Button } from '$lib/components/ui/button'
 
-  import { INKCLIP_PID, INKCLIP_VID } from '$lib/constants'
+  import { DEVICE_PID, DEVICE_VID } from '$lib/constants'
   import { getDeviceContext } from '$lib/contexts/device.svelte'
 
   const deviceCtx = getDeviceContext()
@@ -10,8 +10,8 @@
     const devs = await navigator.hid.requestDevice({
       filters: [
         {
-          vendorId: INKCLIP_VID,
-          productId: INKCLIP_PID,
+          vendorId: DEVICE_VID,
+          productId: DEVICE_PID,
         },
       ],
     })
