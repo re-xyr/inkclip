@@ -3,7 +3,7 @@ import type { DitheringKernel, RgbQuantImage } from '$lib/vendor/rgbquant'
 
 export type { DitheringKernel, RgbQuantImage } from '$lib/vendor/rgbquant'
 
-export const DEFAULT_DITHERING_KERNEL: DitheringKernel = 'FloydSteinberg'
+export const DEFAULT_DITHERING_KERNEL: DitheringKernel = 'Atkinson'
 
 export type QuantizerOptions = {
   ditheringKernel: DitheringKernel | null
