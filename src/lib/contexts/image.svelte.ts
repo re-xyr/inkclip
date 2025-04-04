@@ -1,6 +1,7 @@
 import { getContext, setContext } from 'svelte'
 import type { FilesContext } from './files.svelte'
 import { toast } from 'svelte-sonner'
+import { INKCLIP_HEIGHT, INKCLIP_WIDTH } from '$lib/constants'
 
 export interface ImageContext {
   image: ImageBitmap | null
@@ -38,4 +39,9 @@ export function createImageContext(filesCtx: FilesContext): Readonly<ImageContex
   })
 
   return setContext(ImageContextToken, ctx)
+}
+
+export function imageIsCorrectRatio(imageCtx: ImageContext): boolean {
+  if (imageCtx.image === null) return true
+  return imageCtx.image.height * INKCLIP_WIDTH === imageCtx.image.width * INKCLIP_HEIGHT
 }

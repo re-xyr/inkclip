@@ -1,9 +1,53 @@
 import { INKCLIP_HEIGHT, INKCLIP_WIDTH } from '$lib/constants'
+import type { ConversionConfig } from '$lib/contexts/config.svelte'
+import type { FilesContext } from '$lib/contexts/files.svelte'
+import { imageIsCorrectRatio, type ImageContext } from '$lib/contexts/image.svelte'
 
 export function freshContext(el: HTMLCanvasElement) {
   const ctx = el.getContext('2d')!
   ctx.imageSmoothingEnabled = false
   return ctx
+}
+
+export function makeAltText(filesCtx: FilesContext, imageCtx: ImageContext, config: ConversionConfig): string {
+  if (filesCtx.files.length < 1) return 'No image selected for e-paper preview'
+
+  const file = filesCtx.files[0]
+
+  const output = [`${INKCLIP_WIDTH}-by-${INKCLIP_HEIGHT}-pixels e-paper preview of "${file.name}"`]
+
+  if (!imageIsCorrectRatio(imageCtx)) {
+    if (config.scaleMode === 'fit') output.push('letterboxed')
+    else if (config.scaleMode === 'crop') output.push('cropped to fit')
+    else if (config.scaleMode === 'distort') output.push('stretched to fit')
+  }
+
+  if (config.transform.side === 'reverse') output.push('flipped horizontally')
+
+  if (config.transform.rotation !== 0) output.push(`rotated ${config.transform.rotation} degrees`)
+
+  if (config.ditheringKernel === null) output.push('no dithering')
+  else output.push('with dithering')
+
+  if (config.ditheringKernel !== null) {
+    if (config.contrast >= 0.75) output.push('with very high contrast')
+    else if (config.contrast >= 0.25) output.push('with high contrast')
+  }
+
+  if (config.contrast > 0 || config.ditheringKernel === null) {
+    const biasScaleFactor = config.ditheringKernel === null ? 1 : config.contrast
+    const scaledBias = config.bias * biasScaleFactor
+
+    if (scaledBias >= 0.5) output.push('extremely biased towards black')
+    else if (scaledBias >= 0.25) output.push('biased towards black')
+    else if (scaledBias >= 0.1) output.push('slightly biased towards black')
+
+    if (scaledBias <= -0.5) output.push('extremely biased towards white')
+    else if (scaledBias <= -0.25) output.push('biased towards white')
+    else if (scaledBias <= -0.1) output.push('slightly biased towards white')
+  }
+
+  return output.join(', ')
 }
 
 export function drawQuantizedData(ctx: CanvasRenderingContext2D, data: number[]) {

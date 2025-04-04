@@ -13,19 +13,14 @@
   import BiasSlider from './conversion/BiasSlider.svelte'
 
   import { getConversionConfig } from '$lib/contexts/config.svelte'
-  import { getImageContext } from '$lib/contexts/image.svelte'
-  import { INKCLIP_HEIGHT, INKCLIP_WIDTH } from '$lib/constants'
+  import { getImageContext, imageIsCorrectRatio } from '$lib/contexts/image.svelte'
   import { DEFAULT_DITHERING_KERNEL } from '$lib/image/quantizer'
 
   const imageCtx = getImageContext()
   const config = getConversionConfig()
 
   const transformDisabled = $derived(imageCtx.image === null)
-
-  function imageNonSquare() {
-    if (imageCtx.image === null) return false
-    return imageCtx.image.height * INKCLIP_WIDTH !== imageCtx.image.width * INKCLIP_HEIGHT
-  }
+  const imageNonSquare = $derived(!imageIsCorrectRatio(imageCtx))
 
   function restoreDefaultImageSettings() {
     config.scaleMode = 'fit'
@@ -40,23 +35,23 @@
 <section class="grow stack gap-4" aria-labelledby="controls-section-label">
   <h2 class="font-semibold text-xl/6" id="controls-section-label">Edit image</h2>
 
-  {#if imageNonSquare()}
+  {#if imageNonSquare}
     <AspectRatioAlert />
   {/if}
 
   <div class="row gap-4">
-    {#if imageNonSquare()}
+    {#if imageNonSquare}
       <ScaleModeToggleGroup />
     {/if}
 
     <TransformControls disabled={transformDisabled} />
   </div>
 
-  <Separator />
+  <Separator decorative />
 
   <BackgroundColorSlider />
 
-  <Separator />
+  <Separator decorative />
 
   <DitherControls />
 
@@ -68,7 +63,7 @@
     <BiasSlider />
   {/if}
 
-  <Separator />
+  <Separator decorative />
 
   <Button variant="secondary" class="w-full" onclick={restoreDefaultImageSettings}>
     <IconEditOff aria-hidden />

@@ -17,7 +17,9 @@
   createRenderedContext(imageCtx, config)
 </script>
 
-<main class="grow w-full stack gap-4">
+<main class="grow w-full stack gap-4" aria-labelledby="main-label">
+  <h1 class="sr-only" id="main-label">Write to Inkclip</h1>
+
   <ConnectSection />
 
   <Separator decorative />
