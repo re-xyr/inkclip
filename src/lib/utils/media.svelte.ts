@@ -1,3 +1,5 @@
+import { onDestroy } from 'svelte'
+
 export interface ReactiveMediaQuery {
   readonly matches: boolean
 }
@@ -7,9 +9,10 @@ export function createMediaQuery(query: string): ReactiveMediaQuery {
 
   const queryState = $state({ matches: queryList.matches })
 
-  queryList.addEventListener('change', self => {
-    queryState.matches = self.matches
-  })
+  const updateQueryState = (e: MediaQueryListEvent) => (queryState.matches = e.matches)
+
+  queryList.addEventListener('change', updateQueryState)
+  onDestroy(() => queryList.removeEventListener('change', updateQueryState))
 
   return queryState
 }

@@ -1,5 +1,5 @@
 import { DEVICE_PID, DEVICE_VID } from '$lib/constants'
-import { getContext, setContext } from 'svelte'
+import { getContext, onDestroy, setContext } from 'svelte'
 import { toast } from 'svelte-sonner'
 
 function isInkclip(dev: HIDDevice) {
@@ -24,18 +24,26 @@ export function createDeviceContext(): DeviceContext {
     if (dev !== undefined) ctx.device = dev
   })
 
-  navigator.hid.addEventListener('connect', e => {
-    if (isInkclip(e.device) && ctx.device === null) {
+  function connectIfIdle(e: HIDConnectionEvent) {
+    if (!isInkclip(e.device) || ctx.device !== null) return
+
       toast.info('Device connected')
       ctx.device = e.device
     }
-  })
 
-  navigator.hid.addEventListener('disconnect', e => {
-    if (ctx.device === e.device) {
+  function disconnectIfSame(e: HIDConnectionEvent) {
+    if (ctx.device !== e.device) return
+
       toast.info('Device disconnected')
       ctx.device = null
     }
+
+  navigator.hid.addEventListener('connect', connectIfIdle)
+  navigator.hid.addEventListener('disconnect', disconnectIfSame)
+
+  onDestroy(() => {
+    navigator.hid.removeEventListener('connect', connectIfIdle)
+    navigator.hid.removeEventListener('disconnect', disconnectIfSame)
   })
 
   return setContext(DeviceContextToken, ctx)
