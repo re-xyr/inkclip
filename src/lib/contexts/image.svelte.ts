@@ -41,7 +41,7 @@ export function createImageContext(filesCtx: FilesContext): Readonly<ImageContex
   return setContext(ImageContextToken, ctx)
 }
 
-export function imageIsCorrectRatio(imageCtx: ImageContext): boolean {
-  if (imageCtx.image === null) return true
-  return imageCtx.image.height * DEVICE_WIDTH === imageCtx.image.width * DEVICE_HEIGHT
+export function imageIsCorrectRatio(image: ImageBitmap | null): boolean {
+  if (image === null) return true
+  return image.height * DEVICE_WIDTH === image.width * DEVICE_HEIGHT
 }

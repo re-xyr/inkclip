@@ -20,7 +20,7 @@
   const config = getConversionConfig()
 
   const transformDisabled = $derived(imageCtx.image === null)
-  const imageNonSquare = $derived(!imageIsCorrectRatio(imageCtx))
+  const imageNonSquare = $derived(!imageIsCorrectRatio(imageCtx.image))
 
   function restoreDefaultImageSettings() {
     config.scaleMode = 'fit'

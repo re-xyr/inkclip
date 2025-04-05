@@ -16,7 +16,7 @@ export function makeAltText(filesCtx: FilesContext, imageCtx: ImageContext, conf
 
   const output = [`${DEVICE_WIDTH}-by-${DEVICE_HEIGHT}-pixels e-paper preview of "${file.name}"`]
 
-  if (!imageIsCorrectRatio(imageCtx)) {
+  if (!imageIsCorrectRatio(imageCtx.image)) {
     if (config.scaleMode === 'fit') output.push('letterboxed')
     else if (config.scaleMode === 'crop') output.push('cropped to fit')
     else if (config.scaleMode === 'distort') output.push('stretched to fit')
