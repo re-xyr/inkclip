@@ -29,7 +29,7 @@ get along, so we shut typescript up by casting `value` to `never`.
   {#snippet children({ thumbs })}
     <span
       data-orientation={orientation}
-      class="bg-secondary relative grow overflow-hidden rounded-full data-[orientation='horizontal']:h-2 data-[orientation='vertical']:h-full data-[orientation='horizontal']:w-full data-[orientation='vertical']:w-2"
+      class="bg-secondary relative grow overflow-hidden rounded-full data-[orientation='horizontal']:h-2 data-[orientation='vertical']:h-full data-[orientation='horizontal']:w-full data-[orientation='vertical']:w-2 hover:cursor-pointer"
     >
       <SliderPrimitive.Range
         class="bg-primary absolute data-[orientation='horizontal']:h-full data-[orientation='vertical']:w-full"
@@ -38,7 +38,7 @@ get along, so we shut typescript up by casting `value` to `never`.
     {#each thumbs as thumb (thumb)}
       <SliderPrimitive.Thumb
         index={thumb}
-        class="border-primary bg-background ring-offset-background focus-visible:ring-ring block size-5 rounded-full border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+        class="border-primary bg-background ring-offset-background focus-visible:ring-ring block size-5 rounded-full border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:cursor-pointer"
         aria-labelledby={ariaLabelledby}
       />
     {/each}
