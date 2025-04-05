@@ -2,7 +2,7 @@
   import { Button } from '$lib/components/ui/button'
 
   import { toast } from 'svelte-sonner'
-  import { getDeviceContext } from '$lib/contexts/device.svelte'
+  import { getDeviceContext, tryOpenDevice } from '$lib/contexts/device.svelte'
   import { getRenderedContext } from '$lib/contexts/rendered.svelte'
   import { BYTES_IN_A_ROW, DEVICE_HEIGHT, DEVICE_WIDTH, WRITE_TIME } from '$lib/constants'
 
@@ -22,15 +22,7 @@
 
   async function connectAndWrite() {
     if (deviceCtx.device === null || renderedCtx.rendered === null) return
-
-    if (!deviceCtx.device.opened) {
-      try {
-        await deviceCtx.device.open()
-      } catch (e) {
-        toast.error(`Unable to open device: ${e}`)
-        return
-      }
-    }
+    if (!(await tryOpenDevice(deviceCtx.device))) return
 
     const buffer = new Uint8Array(DEVICE_HEIGHT * BYTES_IN_A_ROW)
     for (let y = 0; y < DEVICE_HEIGHT; y++) {
@@ -47,7 +39,7 @@
     inProgress = true
 
     try {
-      await deviceCtx.device.sendReport(0, buffer)
+      await deviceCtx.device.sendReport(0x01, buffer)
     } catch (e) {
       toast.error(`Error writing to device: ${e}`)
       return

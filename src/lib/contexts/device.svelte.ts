@@ -27,16 +27,16 @@ export function createDeviceContext(): DeviceContext {
   function connectIfIdle(e: HIDConnectionEvent) {
     if (!isInkclip(e.device) || ctx.device !== null) return
 
-      toast.info('Device connected')
-      ctx.device = e.device
-    }
+    toast.info('Device connected')
+    ctx.device = e.device
+  }
 
   function disconnectIfSame(e: HIDConnectionEvent) {
     if (ctx.device !== e.device) return
 
-      toast.info('Device disconnected')
-      ctx.device = null
-    }
+    toast.info('Device disconnected')
+    ctx.device = null
+  }
 
   navigator.hid.addEventListener('connect', connectIfIdle)
   navigator.hid.addEventListener('disconnect', disconnectIfSame)
@@ -47,4 +47,16 @@ export function createDeviceContext(): DeviceContext {
   })
 
   return setContext(DeviceContextToken, ctx)
+}
+
+export async function tryOpenDevice(device: HIDDevice): Promise<boolean> {
+  if (device.opened) return true
+
+  try {
+    await device.open()
+    return true
+  } catch (e) {
+    toast.error(`Unable to open device: ${e}`)
+    return false
+  }
 }
