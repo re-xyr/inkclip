@@ -8,3 +8,6 @@ export const DEVICE_ASPECT_RATIO = DEVICE_WIDTH / DEVICE_HEIGHT
 export const BYTES_IN_A_ROW = DEVICE_WIDTH / 8
 
 export const WRITE_TIME = 2000 // ms
+
+export const WRITE_PATTERN_REPORT_ID = 0x01
+export const SERIAL_NUMBER_REPORT_ID = 0x02

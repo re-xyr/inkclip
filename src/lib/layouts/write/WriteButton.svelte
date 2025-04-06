@@ -4,7 +4,14 @@
   import { toast } from 'svelte-sonner'
   import { getDeviceContext, tryOpenDevice } from '$lib/contexts/device.svelte'
   import { getRenderedContext } from '$lib/contexts/rendered.svelte'
-  import { BYTES_IN_A_ROW, DEVICE_HEIGHT, DEVICE_WIDTH, WRITE_TIME } from '$lib/constants'
+  import {
+    BYTES_IN_A_ROW,
+    DEVICE_HEIGHT,
+    DEVICE_WIDTH,
+    SERIAL_NUMBER_REPORT_ID,
+    WRITE_PATTERN_REPORT_ID,
+    WRITE_TIME,
+  } from '$lib/constants'
 
   interface Props {
     onprogress: (inPropgress: boolean) => void
@@ -39,7 +46,7 @@
     inProgress = true
 
     try {
-      await deviceCtx.device.sendReport(0x01, buffer)
+      await deviceCtx.device.sendReport(WRITE_PATTERN_REPORT_ID, buffer)
     } catch (e) {
       toast.error(`Error writing to device: ${e}`)
       return

@@ -5,6 +5,7 @@
 
   import { getDeviceContext, tryOpenDevice } from '$lib/contexts/device.svelte'
   import MoreInfo from '$lib/components/MoreInfo.svelte'
+  import { SERIAL_NUMBER_REPORT_ID } from '$lib/constants'
 
   const deviceCtx = getDeviceContext()
 
@@ -15,23 +16,21 @@
       serial = '[Retrieving...]'
       return
     }
+
     if (!(await tryOpenDevice(deviceCtx.device))) {
       serial = '[Error]'
       return
     }
 
+    let updated = false
     function setSerial(e: HIDInputReportEvent) {
-      if (e.reportId !== 0x02) return
+      if (updated || e.reportId !== SERIAL_NUMBER_REPORT_ID) return
       serial = String.fromCharCode(...Array.from(new Uint8Array(e.data.buffer)))
+      updated = true
     }
 
-    let updated = false
-    deviceCtx.device.addEventListener('inputreport', e => {
-      if (!updated) setSerial(e)
-      updated = true
-    })
-
-    deviceCtx.device.sendReport(0x02, new Uint8Array(1))
+    deviceCtx.device.addEventListener('inputreport', setSerial)
+    await deviceCtx.device.sendReport(SERIAL_NUMBER_REPORT_ID, new Uint8Array(1))
   }
 
   $effect(() => {
