@@ -30,7 +30,7 @@ export function createRenderedContext(
     new Quantizer({
       ditheringKernel: config.ditheringKernel,
       contrast: config.contrast,
-      bias: config.bias,
+      brightness: config.brightness,
     })
   )
 

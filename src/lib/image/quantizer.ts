@@ -8,7 +8,7 @@ export const DEFAULT_DITHERING_KERNEL: DitheringKernel = 'Atkinson'
 export type QuantizerOptions = {
   ditheringKernel: DitheringKernel | null
   contrast: number
-  bias: number
+  brightness: number
 }
 
 export class Quantizer {
@@ -17,10 +17,10 @@ export class Quantizer {
 
   private readonly rgbquant: RgbQuant
 
-  constructor({ ditheringKernel, contrast, bias }: QuantizerOptions) {
+  constructor({ ditheringKernel, contrast, brightness }: QuantizerOptions) {
     const saturationAdjustment = ditheringKernel === null ? 127 : 127 * contrast
-    this.white = 255 + (bias - 1) * saturationAdjustment
-    this.black = (1 + bias) * saturationAdjustment
+    this.white = 255 - (1 + brightness) * saturationAdjustment
+    this.black = (1 - brightness) * saturationAdjustment
 
     this.rgbquant = new RgbQuant({
       colors: 2,

@@ -35,16 +35,16 @@ export function makeAltText(filesCtx: FilesContext, imageCtx: ImageContext, conf
   }
 
   if (config.contrast > 0 || config.ditheringKernel === null) {
-    const biasScaleFactor = config.ditheringKernel === null ? 1 : config.contrast
-    const scaledBias = config.bias * biasScaleFactor
+    const brightnessScaleFactor = config.ditheringKernel === null ? 1 : config.contrast
+    const scaledBrightness = config.brightness * brightnessScaleFactor
 
-    if (scaledBias >= 0.5) output.push('extremely biased towards black')
-    else if (scaledBias >= 0.25) output.push('biased towards black')
-    else if (scaledBias >= 0.1) output.push('slightly biased towards black')
+    if (scaledBrightness >= 0.5) output.push('extremely brightened')
+    else if (scaledBrightness >= 0.25) output.push('brightened')
+    else if (scaledBrightness >= 0.1) output.push('slightly brightened')
 
-    if (scaledBias <= -0.5) output.push('extremely biased towards white')
-    else if (scaledBias <= -0.25) output.push('biased towards white')
-    else if (scaledBias <= -0.1) output.push('slightly biased towards white')
+    if (scaledBrightness <= -0.5) output.push('extremely darkened')
+    else if (scaledBrightness <= -0.25) output.push('darkened')
+    else if (scaledBrightness <= -0.1) output.push('slightly darkened')
   }
 
   return output.join(', ')

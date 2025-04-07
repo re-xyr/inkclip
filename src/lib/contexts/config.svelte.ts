@@ -9,7 +9,7 @@ export interface ConversionConfig {
   backgroundColor: number
   ditheringKernel: DitheringKernel | null
   contrast: number
-  bias: number
+  brightness: number
 }
 
 const ConversionConfigToken = Symbol('conversion-config')
@@ -25,7 +25,7 @@ export function createConversionConfig() {
     backgroundColor: 255,
     ditheringKernel: DEFAULT_DITHERING_KERNEL,
     contrast: 0,
-    bias: 0,
+    brightness: 0,
   })
 
   return setContext(ConversionConfigToken, config)

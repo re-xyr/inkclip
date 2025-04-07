@@ -8,33 +8,33 @@
 
   const config = getConversionConfig()
 
-  let value = $derived(Math.round(config.bias * 100))
+  let value = $derived(Math.round(config.brightness * 100))
 </script>
 
-<div class="stack gap-4" role="group" aria-labelledby="bias-input-label">
+<div class="stack gap-4" role="group" aria-labelledby="brightness-input-label">
   <div class="row gap-1 text-sm">
-    <Label id="bias-input-label">Bias</Label>
+    <Label id="brightness-input-label">Brightness</Label>
     <span class="font-normal text-muted-foreground">
       =<ImplicitNumericInput
         min={-100}
         max={100}
         {value}
-        onchange={v => (config.bias = (value = v) / 100)}
-        aria-labelledby="bias-input-label"
+        onchange={v => (config.brightness = (value = v) / 100)}
+        aria-labelledby="brightness-input-label"
       />%
     </span>
     <MoreInfo>
-      Whether the conversion algorithm should bias the entire image towards white (negative) or black (positive).
+      Whether the conversion algorithm should bias the entire image towards white (positive) or black (negative).
     </MoreInfo>
   </div>
 
   <Slider
     type="single"
     bind:value
-    onValueCommit={() => (config.bias = value / 100)}
+    onValueCommit={() => (config.brightness = value / 100)}
     min={-100}
     max={100}
     step={1}
-    aria-labelledby="bias-input-label"
+    aria-labelledby="brightness-input-label"
   />
 </div>

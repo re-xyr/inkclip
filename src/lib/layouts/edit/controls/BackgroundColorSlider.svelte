@@ -19,7 +19,7 @@
         min={0}
         max={0xff}
         {value}
-        onchange={v => (config.bias = value = v)}
+        onchange={v => (config.brightness = value = v)}
         aria-labelledby="background-color-input-label"
       />
     </span>

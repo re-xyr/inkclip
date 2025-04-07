@@ -10,7 +10,7 @@
   import BackgroundColorSlider from './BackgroundColorSlider.svelte'
   import DitherControls from './conversion/dither/DitherControls.svelte'
   import ContrastSlider from './conversion/ContrastSlider.svelte'
-  import BiasSlider from './conversion/BiasSlider.svelte'
+  import BrightnessSlider from './conversion/BrightnessSlider.svelte'
 
   import { getConversionConfig } from '$lib/contexts/config.svelte'
   import { getImageContext, imageIsCorrectRatio } from '$lib/contexts/image.svelte'
@@ -28,7 +28,7 @@
     config.backgroundColor = 0xff
     config.ditheringKernel = DEFAULT_DITHERING_KERNEL
     config.contrast = 0
-    config.bias = 0
+    config.brightness = 0
   }
 </script>
 
@@ -60,7 +60,7 @@
   {/if}
 
   {#if config.ditheringKernel === null || config.contrast !== 0}
-    <BiasSlider />
+    <BrightnessSlider />
   {/if}
 
   <Separator decorative />
