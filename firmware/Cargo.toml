@@ -1,0 +1,48 @@
+[package]
+name = "inkclip-firmware"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+embassy-stm32 = { version = "0.2", features = [
+  "defmt",
+  "stm32f411ce",
+  "memory-x",
+  "time-driver-any",
+  "exti",
+] }
+embassy-sync = { version = "0.6", features = ["defmt"] }
+embassy-executor = { version = "0.7", features = [
+  "nightly",
+  "arch-cortex-m",
+  "executor-thread",
+  "executor-interrupt",
+  "defmt",
+] }
+embassy-time = { version = "0.4", features = [
+  "defmt",
+  "defmt-timestamp-uptime",
+  "tick-hz-32_768",
+] }
+embassy-usb = { version = "0.4", features = ["defmt"] }
+embassy-futures = { version = "0.1", features = ["defmt"] }
+
+defmt = "1.0"
+defmt-rtt = "1.0"
+
+cortex-m = { version = "0.7", features = [
+  "inline-asm",
+  "critical-section-single-core",
+] }
+cortex-m-rt = "0.7"
+embedded-hal-bus = { version = "0.3", features = ["async"] }
+panic-probe = { version = "1.0", features = ["print-defmt"] }
+critical-section = "1.1"
+
+epd-waveshare = "0.6"
+embedded-graphics = "0.8"
+usbd-hid = "0.8"
+base64 = { version = "0.22", default-features = false }
+
+[profile.release]
+opt-level = "z"
