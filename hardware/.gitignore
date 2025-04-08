@@ -1,0 +1,32 @@
+# backups
+*-backups/
+*.kicad_pcb-bak
+*.kicad_sch-bak
+
+# logs
+*_log_missing3Dmodels.txt
+*_missing3Dmodels.txt
+
+# cache
+fp-info-cache
+*.kicad_prl
+
+# fabrication files
+*.gbl
+*.gbs
+*.gbp
+*.gbo
+*.gm1
+*.gtl
+*.gts
+*.gtp
+*.gto
+*.gbrjob
+*.drl
+*.gbr
+*.zip
+
+# BOM files
+*.xls
+*.xml
+*.csv
