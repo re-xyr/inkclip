@@ -16,6 +16,16 @@ This is the firmware implementation for Inkclip. It implements a USB 2.0 HID dev
 
   An ASCII representation of the device's unique serial number. Currently, this is implemented as the base-64 encoding of the 12-byte UID of the STM32 MCU.
 
+## Flashing the Firmware
+
+If you simply want to flash the firmware onto a completed Inkclip device, you can use the [cargo-dfu](https://github.com/dfu-rs/cargo-dfu) tool. Simply connect the device via USB with BOOT0 pulled up and then run under this directory
+
+```sh
+cargo dfu --release
+```
+
+If you want to debug this firmware through e.g. [SWD](https://developer.arm.com/documentation/100893/latest/Debug-and-trace-interface/Serial-Wire-Debug-signals) then you can use [probe-rs](https://probe.rs/) with a debugging probe instead.
+
 ## Implementation Details
 
 - The USB device sets the maximum current to 100mA, which should be well above the active power draw of the actual hardware (9mA MCU + 8mA e-paper).

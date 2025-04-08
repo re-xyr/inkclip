@@ -6,6 +6,10 @@ Write to Inkclip is a web application for writing patterns onto the Inkclip devi
 
 This application also supports some primitive image editing functions, such as scaling and cropping, rotation and mirroring, the adjustment of contrast and brightness, and a range of dithering algorithms available to use for converting images to black-and-white.
 
+## Building
+
+Run `npm run dev` under this directory in order to spin up a Vite development server, and run `npm run build` to bundle the application.
+
 ## Technical matters
 
 Write to Inkclip depends on the [WebHID API](https://developer.mozilla.org/en-US/docs/Web/API/WebHID_API) to send data to devices. As a consequence, it is only supported on Chromium-based browsers, which are the only browsers that support WebHID at this time.
