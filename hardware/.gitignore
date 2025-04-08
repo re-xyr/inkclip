@@ -10,6 +10,7 @@
 # cache
 fp-info-cache
 *.kicad_prl
+*.lck
 
 # fabrication files
 *.gbl
