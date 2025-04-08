@@ -33,3 +33,7 @@ Inkclip is an e-paper hair clip.
 ## Demo
 
 ![A demo of an Inkclip refreshing its display.](docs/inkclip-demo.gif)
+
+## License
+
+The hardware design portion of this project is available under the *CERN Open Hardware Licence Version 2 - Strongly Reciprocal (`CERN-OHL-S-2.0`)* while the software portion is available under the *GNU General Public License v3.0 or later (`GPL-3.0-or-later`)*. For details, refer to the `LICENSE` files under each subdirectory of this repository.

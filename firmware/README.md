@@ -31,3 +31,7 @@ If you want to debug this firmware through e.g. [SWD](https://developer.arm.com/
 - The USB device sets the maximum current to 100mA, which should be well above the active power draw of the actual hardware (9mA MCU + 8mA e-paper).
 - The SPI link between the MCU and the e-paper display is 20MHz, which is the maximum supported frequency listed on the display module's datasheet.
 - This firmware is implemented in no_std Rust with the [embassy](https://embassy.dev) framework and the [embassy-stm32](https://docs.embassy.dev/embassy-stm32/git/stm32f411ce/index.html) HAL.
+
+## License
+
+This firmware implementation for Inkclip, namely all files under this directory, is provided under [GNU General Public License v3.0 or later (`GPL-3.0-or-later`)](LICENSE).

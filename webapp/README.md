@@ -15,3 +15,7 @@ Run `npm run dev` under this directory in order to spin up a Vite development se
 Write to Inkclip depends on the [WebHID API](https://developer.mozilla.org/en-US/docs/Web/API/WebHID_API) to send data to devices. As a consequence, it is only supported on Chromium-based browsers, which are the only browsers that support WebHID at this time.
 
 Write to Inkclip is a fully client-side application. It is built with [Svelte](https://svelte.dev), [shadcn-svelte](https://next.shadcn-svelte.com), [Vite](https://vite.dev), and [Tailwind CSS](https://tailwindcss.com). An instance of Write to Inkclip is hosted at https://inkclip.dayli.ly.
+
+## License
+
+The Write to Inkclip web application, namely all files under this directory, is provided under [GNU General Public License v3.0 or later (`GPL-3.0-or-later`)](LICENSE).
