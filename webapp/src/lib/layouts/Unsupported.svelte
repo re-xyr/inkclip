@@ -20,9 +20,8 @@
         <p>
           We recommend using a Chromium-based browser, such as a recent version of
           <a href="https://www.google.com/chrome/">Google Chrome</a>,
-          <a href="https://www.microsoft.com/edge">Microsoft Edge</a>,
-          <a href="https://www.opera.com/">Opera</a>, or
-          <a href="https://arc.net/">Arc</a>.
+          <a href="https://www.microsoft.com/edge">Microsoft Edge</a>, or
+          <a href="https://www.opera.com/">Opera</a>.
         </p>
       </AlertDialog.Description>
     </AlertDialog.Content>
