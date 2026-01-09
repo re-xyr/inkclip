@@ -215,8 +215,8 @@ impl App {
                             {
                                 warn!(
                                     "App: SysEx does not start with magic number; first {} bytes = {}. dropping.",
-                                    MAGIC_NUMBER,
-                                    sysex[..MAGIC_NUMBER_LEN]
+                                    MAGIC_NUMBER_LEN.min(sysex.len()),
+                                    sysex[..MAGIC_NUMBER_LEN.min(sysex.len())]
                                 );
                                 continue;
                             }
