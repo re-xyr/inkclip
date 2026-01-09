@@ -1,5 +1,7 @@
 # Inkclip Firmware
 
+> WARNING! Contents below are outdated; we are currently using a USB MIDI-based firmware for better cross-platform compatibility.
+
 This is the firmware implementation for Inkclip. It implements a USB 2.0 HID device with the following reports:
 
 - **Write Pattern:** Report ID = 0x01, Direction = Output (host to device), Size = 5,000 bytes.

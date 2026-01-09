@@ -1,3 +1,4 @@
+use embassy_stm32::Peri;
 use embassy_stm32::gpio::{self, Level, Pull, Speed};
 use embassy_stm32::spi::{self, MosiPin, SckPin, Spi};
 use embassy_stm32::time::Hertz;
@@ -8,8 +9,11 @@ use epd_waveshare::epd1in54::Display1in54;
 use epd_waveshare::epd1in54_v2::Epd1in54;
 use epd_waveshare::prelude::*;
 
-type EpdSpiDevice =
-    ExclusiveDevice<Spi<'static, embassy_stm32::mode::Blocking>, gpio::Output<'static>, Delay>;
+type EpdSpiDevice = ExclusiveDevice<
+    Spi<'static, embassy_stm32::mode::Blocking, spi::mode::Master>,
+    gpio::Output<'static>,
+    Delay,
+>;
 
 pub struct Epd {
     spi_device: EpdSpiDevice,
@@ -24,13 +28,13 @@ pub struct Epd {
 
 impl Epd {
     pub fn new<SPI: spi::Instance>(
-        spi: SPI,
-        cs: impl gpio::Pin,
-        sck: impl SckPin<SPI>,
-        mosi: impl MosiPin<SPI>,
-        busy: impl gpio::Pin,
-        dc: impl gpio::Pin,
-        rst: impl gpio::Pin,
+        spi: Peri<'static, SPI>,
+        cs: Peri<'static, impl gpio::Pin>,
+        sck: Peri<'static, impl SckPin<SPI>>,
+        mosi: Peri<'static, impl MosiPin<SPI>>,
+        busy: Peri<'static, impl gpio::Pin>,
+        dc: Peri<'static, impl gpio::Pin>,
+        rst: Peri<'static, impl gpio::Pin>,
     ) -> Epd {
         let cs_pin = gpio::Output::new(cs, Level::High, Speed::VeryHigh);
         let busy_pin = gpio::Input::new(busy, Pull::Down);

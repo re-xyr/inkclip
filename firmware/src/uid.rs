@@ -6,7 +6,7 @@ pub fn uid_base64() -> &'static str {
 }
 
 #[allow(static_mut_refs)]
-pub fn uid_base64_bytes() -> &'static [u8] {
+pub fn uid_base64_bytes() -> &'static [u8; 16] {
     static mut UID_BASE64: [u8; 16] = [0; 16];
     static mut LOADED: bool = false;
     critical_section::with(|_| unsafe {
