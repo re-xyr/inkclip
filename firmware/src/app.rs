@@ -24,6 +24,10 @@ enum Chroma {
     Black,
 }
 
+// GetIdentification is always `0x00`, and the device should always return a response starting with
+// the two-byte sequence `0x00 [DeviceType]`. Theoretically this leaves space for different devices
+// to adopt different schemas (although we hope to only use this as a last resort).
+
 #[derive(Deserialize)]
 enum Request<'a> {
     GetIdentification,
@@ -38,7 +42,7 @@ enum Request<'a> {
 
 #[derive(Serialize)]
 enum Response<'a> {
-    GetIdentification { serial: &'a str, model: DeviceType },
+    GetIdentification { model: DeviceType, serial: &'a str },
     UpdateDisplay,
     SetPattern,
 }

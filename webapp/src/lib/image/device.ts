@@ -26,8 +26,8 @@ const requestSchema = p.enumType('Request', {
 export type Response = p.InferType<typeof responseSchema>
 const responseSchema = p.enumType('Response', {
   GetIdentification: p.structVariant('GetIdentification', {
-    serial: p.string(),
     model: deviceTypeSchema,
+    serial: p.string(),
   }),
   UpdateDisplay: p.unitVariant('UpdateDisplay'),
   SetPattern: p.unitVariant('SetPattern'),
