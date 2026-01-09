@@ -6,8 +6,8 @@ import { Scaler } from '$lib/image/scaler'
 import { Quantizer } from '$lib/image/quantizer'
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from '$lib/constants'
 
-export interface RenderedContext {
-  rendered: number[] | null
+export class RenderedContext {
+  rendered: Uint8Array | null = $state(null)
 }
 
 export const RenderedContextToken = Symbol('rendered')
@@ -20,18 +20,16 @@ const scaler = new Scaler(DEVICE_WIDTH, DEVICE_HEIGHT)
 
 export function createRenderedContext(
   imageCtx: Readonly<ImageContext>,
-  config: ConversionConfig
+  config: ConversionConfig,
 ): Readonly<RenderedContext> {
-  const ctx: RenderedContext = $state({
-    rendered: null,
-  })
+  const ctx: RenderedContext = new RenderedContext()
 
   const quantizer = $derived(
     new Quantizer({
       ditheringKernel: config.ditheringKernel,
       contrast: config.contrast,
       brightness: config.brightness,
-    })
+    }),
   )
 
   const canvas = new OffscreenCanvas(DEVICE_WIDTH, DEVICE_HEIGHT)
@@ -56,7 +54,7 @@ export function createRenderedContext(
     })
 
     const quantizedData = quantizer.reduce(canvasCtx)
-    ctx.rendered = quantizedData
+    ctx.rendered = Uint8Array.from(quantizedData)
   })
 
   return setContext(RenderedContextToken, ctx)

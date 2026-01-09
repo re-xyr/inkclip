@@ -1,13 +1,55 @@
-import { DEVICE_PID, DEVICE_VID } from '$lib/constants'
-import { getContext, onDestroy, setContext } from 'svelte'
+import { Device } from '$lib/image/device'
+import { getContext, setContext, untrack } from 'svelte'
 import { toast } from 'svelte-sonner'
 
-function isInkclip(dev: HIDDevice) {
-  return dev.vendorId == DEVICE_VID && dev.productId == DEVICE_PID
+function isInkclip(port: MIDIPort): boolean {
+  return !!(
+    port.manufacturer?.toLowerCase().includes('daylily') ||
+    port.name?.toLowerCase().includes('inkclip')
+  )
 }
 
-export interface DeviceContext {
-  device: HIDDevice | null
+export class DeviceContext {
+  private input: MIDIInput | null = $state(null)
+  private output: MIDIOutput | null = $state(null)
+  device: Device | null = $state(null)
+
+  constructor() {
+    $effect(() => {
+      if (untrack(() => this.device == null)) {
+        if (this.input == null || this.output == null) return
+        this.device = new Device(this.input, this.output)
+        toast.info('Device connected')
+      } else {
+        if (this.input != null && this.output != null) return
+        this.device = null
+      }
+    })
+  }
+
+  async initialize() {
+    try {
+      const midi = await navigator.requestMIDIAccess({ sysex: true })
+      console.log(Array.from(midi.inputs.values()), Array.from(midi.outputs.values()))
+
+      this.input = midi.inputs.values().find(isInkclip) ?? null
+      this.output = midi.outputs.values().find(isInkclip) ?? null
+
+      midi.addEventListener('statechange', e => {
+        console.log(e.port)
+        if (!e.port || !isInkclip(e.port)) return
+        if (e.port?.state === 'connected') {
+          if (e.port.type === 'input' && !this.input) this.input = e.port as MIDIInput
+          else if (e.port.type === 'output' && !this.output) this.output = e.port as MIDIOutput
+        } else {
+          if (e.port.type === 'input' && e.port === this.input) this.input = null
+          else if (e.port.type === 'output' && e.port === this.output) this.output = null
+        }
+      })
+    } catch (e) {
+      toast.error('Failed to acquire MIDI access. Please grant access manually in your browser.')
+    }
+  }
 }
 
 const DeviceContextToken = Symbol('device')
@@ -17,46 +59,6 @@ export function getDeviceContext(): DeviceContext {
 }
 
 export function createDeviceContext(): DeviceContext {
-  const ctx: DeviceContext = $state({ device: null })
-
-  navigator.hid.getDevices().then(devices => {
-    const dev = devices.find(isInkclip)
-    if (dev !== undefined) ctx.device = dev
-  })
-
-  function connectIfIdle(e: HIDConnectionEvent) {
-    if (!isInkclip(e.device) || ctx.device !== null) return
-
-    toast.info('Device connected')
-    ctx.device = e.device
-  }
-
-  function disconnectIfSame(e: HIDConnectionEvent) {
-    if (ctx.device !== e.device) return
-
-    toast.info('Device disconnected')
-    ctx.device = null
-  }
-
-  navigator.hid.addEventListener('connect', connectIfIdle)
-  navigator.hid.addEventListener('disconnect', disconnectIfSame)
-
-  onDestroy(() => {
-    navigator.hid.removeEventListener('connect', connectIfIdle)
-    navigator.hid.removeEventListener('disconnect', disconnectIfSame)
-  })
-
+  let ctx = new DeviceContext()
   return setContext(DeviceContextToken, ctx)
-}
-
-export async function tryOpenDevice(device: HIDDevice): Promise<boolean> {
-  if (device.opened) return true
-
-  try {
-    await device.open()
-    return true
-  } catch (e) {
-    toast.error(`Unable to open device: ${e}`)
-    return false
-  }
 }

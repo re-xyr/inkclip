@@ -8,3 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function showNumber(n: number): string {
   return String(n).replace('-', '−').replace('Infinity', '∞').replace('NaN', '⁇')
 }
+
+export function assert(expr: unknown): asserts expr {
+  if (!expr) throw Error('assertion failed')
+}

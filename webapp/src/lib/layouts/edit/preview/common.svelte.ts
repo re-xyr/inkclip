@@ -9,7 +9,11 @@ export function freshContext(el: HTMLCanvasElement) {
   return ctx
 }
 
-export function makeAltText(filesCtx: FilesContext, imageCtx: ImageContext, config: ConversionConfig): string {
+export function makeAltText(
+  filesCtx: FilesContext,
+  imageCtx: ImageContext,
+  config: ConversionConfig,
+): string {
   if (filesCtx.files.length < 1) return 'No image selected for e-paper preview'
 
   const file = filesCtx.files[0]
@@ -50,8 +54,10 @@ export function makeAltText(filesCtx: FilesContext, imageCtx: ImageContext, conf
   return output.join(', ')
 }
 
-export function drawQuantizedData(ctx: CanvasRenderingContext2D, data: number[]) {
+export function drawQuantizedData(ctx: CanvasRenderingContext2D, data: Uint8Array) {
+  console.log('attempting drawQuantizedData')
   const imageData = ctx.createImageData(DEVICE_WIDTH, DEVICE_HEIGHT)
+  console.log('finished creating')
 
   for (let y = 0; y < DEVICE_HEIGHT; y++) {
     for (let x = 0; x < DEVICE_WIDTH; x++) {
@@ -66,5 +72,8 @@ export function drawQuantizedData(ctx: CanvasRenderingContext2D, data: number[])
       imageData.data[bitmapIx + 3] = 0xff
     }
   }
+  console.log('finished writing')
+
   ctx.putImageData(imageData, 0, 0)
+  console.log('finished putting')
 }

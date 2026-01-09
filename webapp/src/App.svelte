@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { ModeWatcher } from 'mode-watcher'
-  import { Toaster } from 'svelte-sonner'
+import { ModeWatcher } from 'mode-watcher'
+import { Toaster } from 'svelte-sonner'
 
-  import Footer from '$lib/layouts/Footer.svelte'
-  import Main from '$lib/layouts/Main.svelte'
-  import Unsupported from '$lib/layouts/Unsupported.svelte'
+import Footer from '$lib/layouts/Footer.svelte'
+import Main from '$lib/layouts/Main.svelte'
+import Unsupported from '$lib/layouts/Unsupported.svelte'
 
-  const unsupported = navigator.hid === undefined
+const unsupported = navigator.requestMIDIAccess === undefined
 </script>
 
 <ModeWatcher />

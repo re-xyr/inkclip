@@ -1,27 +1,16 @@
 <script lang="ts">
-  import { Button } from '$lib/components/ui/button'
+import { Button } from '$lib/components/ui/button'
+import { getDeviceContext } from '$lib/contexts/device.svelte'
 
-  import { DEVICE_PID, DEVICE_VID } from '$lib/constants'
-  import { getDeviceContext } from '$lib/contexts/device.svelte'
-
-  const deviceCtx = getDeviceContext()
-
-  async function requestDevice() {
-    const devs = await navigator.hid.requestDevice({
-      filters: [
-        {
-          vendorId: DEVICE_VID,
-          productId: DEVICE_PID,
-        },
-      ],
-    })
-
-    if (devs == undefined || devs[0] == undefined) return
-    deviceCtx.device = devs[0]
-  }
+const deviceCtx = getDeviceContext()
 </script>
 
-<Button variant={deviceCtx.device === null ? 'default' : 'secondary'} onclick={requestDevice}>
+<Button
+  variant={deviceCtx.device === null ? 'default' : 'secondary'}
+  onclick={() => {
+    /* TODO: */
+  }}
+>
   {#if deviceCtx.device === null}
     Select device
   {:else}
