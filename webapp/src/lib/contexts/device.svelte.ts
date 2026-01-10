@@ -23,6 +23,7 @@ export class DeviceContext {
       } else {
         if (this.input != null && this.output != null) return
         this.device = null
+        toast.info('Device disconnected')
       }
     })
   }
@@ -30,13 +31,20 @@ export class DeviceContext {
   async initialize() {
     try {
       const midi = await navigator.requestMIDIAccess({ sysex: true })
-      console.log(Array.from(midi.inputs.values()), Array.from(midi.outputs.values()))
+      const inputs = Array.from(midi.inputs.values())
+      const outputs = Array.from(midi.outputs.values())
+      console.log(
+        'MIDI inputs:',
+        Array.from(midi.inputs.values()),
+        'outputs:',
+        Array.from(midi.outputs.values()),
+      )
 
-      this.input = midi.inputs.values().find(isInkclip) ?? null
-      this.output = midi.outputs.values().find(isInkclip) ?? null
+      this.input = inputs.find(isInkclip) ?? null
+      this.output = outputs.find(isInkclip) ?? null
 
       midi.addEventListener('statechange', e => {
-        console.log(e.port)
+        console.log(`MIDI port statechange:`, e.port)
         if (!e.port || !isInkclip(e.port)) return
         if (e.port?.state === 'connected') {
           if (e.port.type === 'input' && !this.input) this.input = e.port as MIDIInput
@@ -47,7 +55,7 @@ export class DeviceContext {
         }
       })
     } catch (e) {
-      toast.error('Failed to acquire MIDI access. Please grant access manually in your browser.')
+      toast.error(`Failed to acquire MIDI access: ${e}`)
     }
   }
 }

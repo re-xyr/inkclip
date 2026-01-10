@@ -22,7 +22,6 @@ async function updateSerial() {
   try {
     const response = await deviceCtx.device.request({ type: 'GetIdentification' })
     assert(response.type === 'GetIdentification')
-    console.log(response)
     serial = response.value.serial
   } catch (e) {
     console.error(e)

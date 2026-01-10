@@ -46,6 +46,7 @@ export class Device {
   ) {}
 
   private send(req: Request) {
+    console.log('Sending request:', req)
     const encResult = encode7in8(p.serialize(requestSchema, req))
     const len = 1 + MAGIC_NUMBER.length + encResult.byteLength + 1
 
@@ -66,8 +67,14 @@ export class Device {
   private recv({ timeout, filter }: RecvOptions): Promise<Response> {
     return new Promise((resolve, reject) => {
       const callback = (e: MIDIMessageEvent) => {
-        if (!e.data) return
-        if (e.data.length < 2 || e.data[0] !== 0xf0 || e.data[e.data.length - 1] !== 0xf7) return
+        if (!e.data) {
+          console.warn('Received MIDIMessageEvent with no data:', e)
+          return
+        }
+        if (e.data.length < 2 || e.data[0] !== 0xf0 || e.data[e.data.length - 1] !== 0xf7) {
+          console.warn('Received non-SysEx message:', e.data)
+          return
+        }
 
         const sysexPayload = e.data.slice(1, -1)
         if (sysexPayload.length < MAGIC_NUMBER.length) return
@@ -77,8 +84,14 @@ export class Device {
         const payload = decode7in8InPlace(sysexPayload.slice(MAGIC_NUMBER.length))
         try {
           const decResult = p.deserialize(responseSchema, payload)
-          if (!filter || filter(decResult.value)) resolve(decResult.value)
+          if (!filter || filter(decResult.value)) {
+            console.log('Received response:', decResult.value)
+            resolve(decResult.value)
+          } else {
+            console.log('Filtered response:', decResult.value)
+          }
         } catch (e) {
+          console.warn('Cannot decode received payload:', payload, e)
           reject(e)
         }
 

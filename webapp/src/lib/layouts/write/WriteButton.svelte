@@ -39,17 +39,21 @@ async function connectAndWrite() {
   inProgress = true
 
   try {
-    for (let i = 0; i < buffer.byteLength; i += 500) {
+    const start = Date.now()
+    for (let i = 0; i < buffer.byteLength; i += 834) {
       await deviceCtx.device.request({
         type: 'SetPattern',
         value: {
           from: i,
           chroma: { type: 'Black' },
-          pattern: buffer.slice(i, i + 500),
+          pattern: buffer.slice(i, i + 834),
         },
       })
     }
+    const written = Date.now()
     await deviceCtx.device.request({ type: 'UpdateDisplay' })
+    const finish = Date.now()
+    console.log('Time (ms): write', written - start, 'update', finish - written, 'total', finish - start)
   } catch (e) {
     toast.error(`Error writing to device: ${e}`)
     return
