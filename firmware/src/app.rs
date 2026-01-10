@@ -124,7 +124,7 @@ impl App {
 
     async fn write_response<'a>(&mut self, resp: Response<'a>) {
         const SYSEX_MAX: usize = 1024 - 2; // 2-byte framing
-        const POSTCARD_WIRE_MAX: usize = SYSEX_MAX * 7 / 8; // 7-in-8 encoding overhead
+        const POSTCARD_WIRE_MAX: usize = (SYSEX_MAX - MAGIC_NUMBER_LEN) * 7 / 8; // 7-in-8 encoding overhead
         const USB_WIRE_MAX: usize = (SYSEX_MAX * 4).div_ceil(3); // USB MIDI muxing overhead
 
         let mut resp_buffer = [0u8; POSTCARD_WIRE_MAX];
