@@ -1,5 +1,3 @@
-use core::cmp::Ordering;
-
 use crate::{
     epd::Epd,
     midi::UsbMidi,
@@ -34,7 +32,6 @@ enum Request<'a> {
     UpdateDisplay,
     SetPattern {
         from: u32,
-        to: u32,
         chroma: Chroma,
         pattern: &'a [u8],
     },
@@ -58,7 +55,7 @@ pub async fn app_task(epd: Epd, midi: UsbMidi) {
     App {
         epd,
         midi,
-        pattern: [0; PATTERN_SIZE],
+        display: Display1in54::default(),
     }
     .run()
     .await
@@ -67,7 +64,7 @@ pub async fn app_task(epd: Epd, midi: UsbMidi) {
 struct App {
     epd: Epd,
     midi: UsbMidi,
-    pattern: [u8; PATTERN_SIZE],
+    display: Display1in54,
 }
 
 impl App {
@@ -75,69 +72,45 @@ impl App {
         match req {
             Request::SetPattern {
                 from,
-                to,
                 chroma,
                 pattern,
-            } => self.handle_set_pattern(from, to, chroma, pattern).await,
+            } => self.handle_set_pattern(from, chroma, pattern).await,
             Request::UpdateDisplay => self.handle_update_display().await,
             Request::GetIdentification => self.handle_get_identification().await,
             Request::Ping => self.write_response(Response::Ping).await,
         }
     }
 
-    async fn handle_set_pattern(&mut self, from: u32, to: u32, _chroma: Chroma, pattern: &[u8]) {
+    async fn handle_set_pattern(&mut self, from: u32, _chroma: Chroma, pattern: &[u8]) {
         let from = from as usize;
-        let to = to as usize;
-        if from >= PATTERN_SIZE || to > PATTERN_SIZE || from > to {
+        let buffer_len = (self.display.size().width * self.display.size().height) as usize;
+
+        if from >= PATTERN_SIZE || from + pattern.len() > buffer_len {
             warn!(
-                "SetPattern: 'from' and/or 'to' out of range (from = {}, to = {}, PATTERN_SIZE = {})",
-                from, to, PATTERN_SIZE
+                "SetPattern: specified [{}, {}) is out of range (len = {})",
+                from,
+                from + pattern.len(),
+                pattern.len(),
             );
             return;
         }
 
-        let buf_size = match pattern.len().cmp(&(to - from)) {
-            Ordering::Less => {
-                warn!(
-                    "SetPattern buffer too short (buf_size = {}, range_size = {})",
-                    pattern.len(),
-                    to - from,
-                );
-                pattern.len()
+        let width = self.display.size().width as i32;
+        for (stride, &byte) in pattern.iter().enumerate() {
+            for stroll in 0..8 {
+                let bit_ix = (from + stride) as i32 * 8 + stroll;
+                let x = bit_ix % width;
+                let y = bit_ix / width;
+                self.display
+                    .set_pixel(Pixel(Point { x, y }, color_at(byte, stroll)));
             }
-            Ordering::Equal => pattern.len(),
-            Ordering::Greater => {
-                warn!(
-                    "SetPattern buffer too long; truncating (buf_size = {}, range_size = {})",
-                    pattern.len(),
-                    to - from,
-                );
-                to - from
-            }
-        };
-
-        for (stride, &byte) in pattern[..buf_size].iter().enumerate() {
-            self.pattern[from + stride] = byte;
         }
 
         self.write_response(Response::SetPattern).await;
     }
 
     async fn handle_update_display(&mut self) {
-        let mut display = Display1in54::default();
-        display.set_rotation(DisplayRotation::Rotate180);
-        let width = display.size().width as i32;
-
-        for (stride, &byte) in self.pattern.iter().enumerate() {
-            for stroll in 0..8 {
-                let ix = stride as i32 * 8 + stroll;
-                let x = ix % width;
-                let y = ix / width;
-                display.set_pixel(Pixel(Point { x, y }, color_at(byte, stroll)));
-            }
-        }
-
-        self.epd.update_display(&display);
+        self.epd.update_display(&self.display);
         self.write_response(Response::UpdateDisplay).await;
     }
 
@@ -150,9 +123,11 @@ impl App {
     }
 
     async fn write_response<'a>(&mut self, resp: Response<'a>) {
-        const RESP_N: usize = 1024;
+        const SYSEX_MAX: usize = 1024 - 2; // 2-byte framing
+        const POSTCARD_WIRE_MAX: usize = SYSEX_MAX * 7 / 8; // 7-in-8 encoding overhead
+        const USB_WIRE_MAX: usize = (SYSEX_MAX * 4).div_ceil(3); // USB MIDI muxing overhead
 
-        let mut resp_buffer = [0u8; RESP_N];
+        let mut resp_buffer = [0u8; POSTCARD_WIRE_MAX];
         let payload_slice = match postcard::to_slice(&resp, &mut resp_buffer) {
             Ok(slice) => slice,
             Err(err) => {
@@ -161,7 +136,7 @@ impl App {
             }
         };
 
-        let mut encode_buffer = [0u8; RESP_N];
+        let mut encode_buffer = [0u8; SYSEX_MAX];
         encode_buffer[..MAGIC_NUMBER_LEN].copy_from_slice(&MAGIC_NUMBER);
         let Some(encoded_len) = encode_7in8(payload_slice, &mut encode_buffer[MAGIC_NUMBER_LEN..])
         else {
@@ -169,7 +144,7 @@ impl App {
             return;
         };
 
-        let mut sysex_encoder = SysExEncoder::<RESP_N>::new();
+        let mut sysex_encoder = SysExEncoder::<USB_WIRE_MAX>::new();
         let Some(encoded) = sysex_encoder.encode(&encode_buffer[..MAGIC_NUMBER_LEN + encoded_len])
         else {
             error!("write_response: USB MIDI encoding overflows the buffer");
@@ -194,7 +169,7 @@ impl App {
     }
 
     pub async fn run(&mut self) {
-        let mut sysex_parser = SysExParser::<8192>::new();
+        let mut sysex_parser = SysExParser::<1024>::new();
 
         '_connection: loop {
             self.midi.wait_connection().await;

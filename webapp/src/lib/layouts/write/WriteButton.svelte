@@ -44,7 +44,6 @@ async function connectAndWrite() {
         type: 'SetPattern',
         value: {
           from: i,
-          to: i + 500,
           chroma: { type: 'Black' },
           pattern: buffer.slice(i, i + 500),
         },

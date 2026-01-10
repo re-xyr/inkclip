@@ -17,7 +17,6 @@ const requestSchema = p.enumType('Request', {
   UpdateDisplay: p.unitVariant('UpdateDisplay'),
   SetPattern: p.structVariant('SetPattern', {
     from: p.u32(),
-    to: p.u32(),
     chroma: chromaSchema,
     pattern: p.bytes(),
   }),
