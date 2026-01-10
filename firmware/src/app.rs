@@ -38,6 +38,7 @@ enum Request<'a> {
         chroma: Chroma,
         pattern: &'a [u8],
     },
+    Ping,
 }
 
 #[derive(Serialize)]
@@ -45,6 +46,7 @@ enum Response<'a> {
     GetIdentification { model: DeviceType, serial: &'a str },
     UpdateDisplay,
     SetPattern,
+    Ping,
 }
 
 const PATTERN_SIZE: usize = 5000;
@@ -79,6 +81,7 @@ impl App {
             } => self.handle_set_pattern(from, to, chroma, pattern).await,
             Request::UpdateDisplay => self.handle_update_display().await,
             Request::GetIdentification => self.handle_get_identification().await,
+            Request::Ping => self.write_response(Response::Ping).await,
         }
     }
 
