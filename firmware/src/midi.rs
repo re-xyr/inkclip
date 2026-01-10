@@ -25,7 +25,7 @@ pub async fn make_usb_builder(
     let mut config = embassy_usb::Config::new(0x1209, 0xc9c9);
     config.manufacturer = Some("Project Daylily");
     config.product = Some("Inkclip BW");
-    config.serial_number = Some(uid::uid_base64().await);
+    config.serial_number = Some(uid::uid_base64());
     config.bcd_usb = UsbVersion::Two;
 
     let usb_driver = usb::Driver::new_fs(peri, Irqs, dp, dm, ep_out_buffer, usb::Config::default());

@@ -140,19 +140,22 @@ impl App {
 
     async fn handle_get_identification(&mut self) {
         self.write_response(Response::GetIdentification {
-            serial: uid_base64().await,
+            serial: uid_base64(),
             model: DeviceType::BWRev1,
         })
         .await;
     }
 
-    async fn write_response<'a>(&mut self, resp: Response<'a>) -> bool {
+    async fn write_response<'a>(&mut self, resp: Response<'a>) {
         const RESP_N: usize = 1024;
 
         let mut resp_buffer = [0u8; RESP_N];
-        let Ok(payload_slice) = postcard::to_slice(&resp, &mut resp_buffer) else {
-            error!("write_response: postcard encoding overflows the buffer");
-            return false;
+        let payload_slice = match postcard::to_slice(&resp, &mut resp_buffer) {
+            Ok(slice) => slice,
+            Err(err) => {
+                error!("write_response: postcard encoding returns {}", err);
+                return;
+            }
         };
 
         let mut encode_buffer = [0u8; RESP_N];
@@ -160,23 +163,31 @@ impl App {
         let Some(encoded_len) = encode_7in8(payload_slice, &mut encode_buffer[MAGIC_NUMBER_LEN..])
         else {
             error!("write_response: 7-in-8 encoding overflows the buffer");
-            return false;
+            return;
         };
 
-        let mut sysex_encoder = SysExEncoder::<1024>::new();
+        let mut sysex_encoder = SysExEncoder::<RESP_N>::new();
         let Some(encoded) = sysex_encoder.encode(&encode_buffer[..MAGIC_NUMBER_LEN + encoded_len])
         else {
             error!("write_response: USB MIDI encoding overflows the buffer");
-            return false;
+            return;
         };
 
         for chunk in encoded.chunks(64) {
-            let Ok(_) = self.midi.write_packet(chunk).await else {
-                error!("write_response: failed to write response");
-                return false;
+            match self.midi.write_packet(chunk).await {
+                Ok(_) => {}
+                Err(EndpointError::BufferOverflow) => {
+                    error!("write_response: EP buffer overflowed");
+                    return;
+                }
+                Err(EndpointError::Disabled) => {
+                    warn!(
+                        "write_response: EP disabled when writing a response. Remainder will be discarded"
+                    );
+                    return;
+                }
             };
         }
-        true
     }
 
     pub async fn run(&mut self) {
@@ -225,13 +236,15 @@ impl App {
                                 continue;
                             }
 
-                            let Ok(parsed) = postcard::from_bytes::<Request>(decode_7in8(
+                            match postcard::from_bytes::<Request>(decode_7in8(
                                 &mut sysex[MAGIC_NUMBER_LEN..],
-                            )) else {
-                                warn!("App: cannot parse payload. dropping.");
-                                continue;
+                            )) {
+                                Ok(parsed) => self.handle_request(parsed).await,
+                                Err(err) => {
+                                    warn!("App: cannot parse payload ({}). dropping.", err);
+                                    continue;
+                                }
                             };
-                            self.handle_request(parsed).await;
                         }
                     }
                 }
