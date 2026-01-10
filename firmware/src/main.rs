@@ -6,6 +6,7 @@ use crate::{
     epd::Epd,
     midi::{make_midi_class, make_usb_builder, usb_task},
 };
+
 use defmt_rtt as _;
 use embassy_executor::{Spawner, main};
 use embassy_stm32::{
@@ -14,6 +15,9 @@ use embassy_stm32::{
     time::Hertz,
     usb::{self},
 };
+#[cfg(not(debug_assertions))]
+use panic_abort as _;
+#[cfg(debug_assertions)]
 use panic_probe as _;
 
 macro_rules! static_ref {
@@ -68,7 +72,7 @@ async fn main(spawner: Spawner) {
         peri.SPI1, peri.PA4, peri.PA5, peri.PA7, peri.PB10, peri.PB0, peri.PB1,
     );
 
-    let mut usb_builder = make_usb_builder(peri.USB_OTG_FS, peri.PA12, peri.PA11);
+    let mut usb_builder = make_usb_builder(peri.USB_OTG_FS, peri.PA12, peri.PA11).await;
     let midi = make_midi_class(&mut usb_builder);
 
     spawner.must_spawn(usb_task(usb_builder));

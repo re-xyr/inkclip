@@ -140,7 +140,7 @@ impl App {
 
     async fn handle_get_identification(&mut self) {
         self.write_response(Response::GetIdentification {
-            serial: uid_base64(),
+            serial: uid_base64().await,
             model: DeviceType::BWRev1,
         })
         .await;
