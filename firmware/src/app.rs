@@ -52,13 +52,9 @@ const MAGIC_NUMBER: [u8; MAGIC_NUMBER_LEN] = [0x7d]; // Generic educational/R&D
 
 #[task]
 pub async fn app_task(epd: Epd, midi: UsbMidi) {
-    App {
-        epd,
-        midi,
-        display: Display1in54::default(),
-    }
-    .run()
-    .await
+    let mut display = Display1in54::default();
+    display.set_rotation(DisplayRotation::Rotate180);
+    App { epd, midi, display }.run().await
 }
 
 struct App {
