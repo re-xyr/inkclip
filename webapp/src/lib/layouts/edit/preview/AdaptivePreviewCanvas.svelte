@@ -28,7 +28,7 @@ $effect(() => {
 
 <div class="bg-[#ccc] shadow-md rounded-lg p-2 w-full aspect-square relative" role="group">
   <div
-    class="shadow-sm shadow-[inset#888] p-1 size-full"
+    class="inset-shadow-sm inset-shadow-stone-400 p-1 size-full"
     role="img"
     aria-label={makeAltText(filesCtx, imageCtx, config)}
   >

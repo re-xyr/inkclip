@@ -1,35 +1,35 @@
 <script lang="ts">
-  import { Transform } from '$lib/image/transform'
+import { Transform } from '$lib/image/transform'
 
-  import { Button } from '$lib/components/ui/button'
-  import Separator from '$lib/components/ui/separator/separator.svelte'
-  import IconEditOff from '~icons/material-symbols/edit-off'
-  import AspectRatioAlert from './dimensions/AspectRatioAlert.svelte'
-  import ScaleModeToggleGroup from './dimensions/ScaleModeToggleGroup.svelte'
-  import TransformControls from './dimensions/TransformControls.svelte'
-  import BackgroundColorSlider from './BackgroundColorSlider.svelte'
-  import DitherControls from './conversion/dither/DitherControls.svelte'
-  import ContrastSlider from './conversion/ContrastSlider.svelte'
-  import BrightnessSlider from './conversion/BrightnessSlider.svelte'
+import { Button } from '$lib/components/ui/button'
+import Separator from '$lib/components/ui/separator/separator.svelte'
+import IconEditOff from '~icons/material-symbols/edit-off'
+import AspectRatioAlert from './dimensions/AspectRatioAlert.svelte'
+import ScaleModeToggleGroup from './dimensions/ScaleModeToggleGroup.svelte'
+import TransformControls from './dimensions/TransformControls.svelte'
+import BackgroundColorSlider from './BackgroundColorSlider.svelte'
+import DitherControls from './conversion/dither/DitherControls.svelte'
+import ContrastSlider from './conversion/ContrastSlider.svelte'
+import BrightnessSlider from './conversion/BrightnessSlider.svelte'
 
-  import { getConversionConfig } from '$lib/contexts/config.svelte'
-  import { getImageContext, imageIsCorrectRatio } from '$lib/contexts/image.svelte'
-  import { DEFAULT_DITHERING_KERNEL } from '$lib/image/quantizer'
+import { getConversionConfig } from '$lib/contexts/config.svelte'
+import { getImageContext, imageIsCorrectRatio } from '$lib/contexts/image.svelte'
+import { DEFAULT_DITHERING_KERNEL } from '$lib/image/quantizer'
 
-  const imageCtx = getImageContext()
-  const config = getConversionConfig()
+const imageCtx = getImageContext()
+const config = getConversionConfig()
 
-  const transformDisabled = $derived(imageCtx.image === null)
-  const imageNonSquare = $derived(!imageIsCorrectRatio(imageCtx.image))
+const transformDisabled = $derived(imageCtx.image === null)
+const imageNonSquare = $derived(!imageIsCorrectRatio(imageCtx.image))
 
-  function restoreDefaultImageSettings() {
-    config.scaleMode = 'fit'
-    config.transform = new Transform()
-    config.backgroundColor = 0xff
-    config.ditheringKernel = DEFAULT_DITHERING_KERNEL
-    config.contrast = 0
-    config.brightness = 0
-  }
+function restoreDefaultImageSettings() {
+  config.scaleMode = 'fit'
+  config.transform = new Transform()
+  config.backgroundColor = 0xff
+  config.ditheringKernel = DEFAULT_DITHERING_KERNEL
+  config.contrast = 0
+  config.brightness = 0
+}
 </script>
 
 <section class="grow stack gap-4" aria-labelledby="controls-section-label">
@@ -39,7 +39,7 @@
     <AspectRatioAlert />
   {/if}
 
-  <div class="row gap-4">
+  <div class="stack 2xs:row gap-4">
     {#if imageNonSquare}
       <ScaleModeToggleGroup />
     {/if}

@@ -1,40 +1,49 @@
 <script lang="ts">
-  import { Label } from '$lib/components/ui/label'
-  import IconHideImage from '~icons/material-symbols/hide-image'
+import { Label } from '$lib/components/ui/label'
+import IconHideImage from '~icons/material-symbols/hide-image'
 
-  import { cn } from '$lib/utils'
-  import { drawQuantizedData, freshContext, makeAltText } from './common.svelte'
-  import { getRenderedContext } from '$lib/contexts/rendered.svelte'
-  import { DEVICE_HEIGHT, DEVICE_WIDTH } from '$lib/constants'
-  import { getFilesContext } from '$lib/contexts/files.svelte'
-  import { getConversionConfig } from '$lib/contexts/config.svelte'
-  import { getImageContext } from '$lib/contexts/image.svelte'
+import { cn } from '$lib/utils'
+import { drawQuantizedData, freshContext, makeAltText } from './common.svelte'
+import { getRenderedContext } from '$lib/contexts/rendered.svelte'
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from '$lib/constants'
+import { getFilesContext } from '$lib/contexts/files.svelte'
+import { getConversionConfig } from '$lib/contexts/config.svelte'
+import { getImageContext } from '$lib/contexts/image.svelte'
 
-  const filesCtx = getFilesContext()
-  const imageCtx = getImageContext()
-  const config = getConversionConfig()
-  const renderedCtx = getRenderedContext()
-  const hasRendered = $derived(renderedCtx.rendered !== null)
+const filesCtx = getFilesContext()
+const imageCtx = getImageContext()
+const config = getConversionConfig()
+const renderedCtx = getRenderedContext()
+const hasRendered = $derived(renderedCtx.rendered !== null)
 
-  interface Props {
-    scale: number
-  }
+interface Props {
+  scale: number
+}
 
-  const { scale }: Props = $props()
+const { scale }: Props = $props()
 
-  let canvasEl: HTMLCanvasElement = $state(undefined!)
+let canvasEl: HTMLCanvasElement = $state(undefined!)
 
-  const ctx = $derived(freshContext(canvasEl))
+const ctx = $derived(freshContext(canvasEl))
 
-  $effect(() => {
-    if (renderedCtx.rendered === null) return
-    drawQuantizedData(ctx, renderedCtx.rendered)
-  })
+$effect(() => {
+  if (renderedCtx.rendered === null) return
+  drawQuantizedData(ctx, renderedCtx.rendered)
+})
 </script>
 
 <div>
-  <div class="bg-[#ccc] shadow-md rounded-lg p-2 w-fit relative" role="group" aria-labelledby="preview-{scale}x-label">
-    <div class="shadow-sm shadow-[inset#888]" style:padding="{scale * 3}px" role="img" aria-label={makeAltText(filesCtx, imageCtx, config)}>
+  <div
+    class="bg-[#ccc] shadow-md rounded-lg p-2 w-fit relative mb-1"
+    role="group"
+    aria-labelledby="preview-{scale}x-label"
+  >
+    <div
+      class="inset-shadow-sm inset-shadow-stone-400"
+      style:padding="{scale * 3}px"
+      role="img"
+      aria-label={makeAltText(filesCtx, imageCtx, config)}
+    >
       <div class="aspect-square" style:width="{DEVICE_WIDTH * scale}px">
         {#if hasRendered}
           <canvas

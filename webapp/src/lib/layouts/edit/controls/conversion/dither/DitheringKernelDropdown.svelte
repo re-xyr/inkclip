@@ -1,31 +1,31 @@
 <script lang="ts">
-  import { type DitheringKernel } from '$lib/image/quantizer'
+import { type DitheringKernel } from '$lib/image/quantizer'
 
-  import { Label } from '$lib/components/ui/label'
-  import * as Select from '$lib/components/ui/select'
-  import MoreInfo from '$lib/components/MoreInfo.svelte'
+import { Label } from '$lib/components/ui/label'
+import * as Select from '$lib/components/ui/select'
+import MoreInfo from '$lib/components/MoreInfo.svelte'
 
-  import { cn } from '$lib/utils'
+import { cn } from '$lib/utils'
 
-  interface Props {
-    hidden: boolean
-    value: DitheringKernel
-    onchange: (v: DitheringKernel) => void
-  }
+interface Props {
+  hidden: boolean
+  value: DitheringKernel
+  onchange: (v: DitheringKernel) => void
+}
 
-  const { hidden, value, onchange }: Props = $props()
+const { hidden, value, onchange }: Props = $props()
 
-  const ditheringKernels: Record<DitheringKernel, string> = {
-    FloydSteinberg: 'Floyd-Steinberg',
-    FalseFloydSteinberg: 'False Floyd-Steinberg',
-    Stucki: 'Stucki',
-    Atkinson: 'Atkinson',
-    Jarvis: 'Jarvis',
-    Burkes: 'Burkes',
-    Sierra: 'Sierra',
-    TwoSierra: '2-Row Sierra',
-    SierraLite: 'Sierra Lite',
-  }
+const ditheringKernels: Record<DitheringKernel, string> = {
+  FloydSteinberg: 'Floyd-Steinberg',
+  FalseFloydSteinberg: 'False Floyd-Steinberg',
+  Stucki: 'Stucki',
+  Atkinson: 'Atkinson',
+  Jarvis: 'Jarvis',
+  Burkes: 'Burkes',
+  Sierra: 'Sierra',
+  TwoSierra: '2-Row Sierra',
+  SierraLite: 'Sierra Lite',
+}
 </script>
 
 <div
@@ -43,7 +43,9 @@
   </div>
 
   <Select.Root type="single" {value} onValueChange={v => onchange(v as DitheringKernel)}>
-    <Select.Trigger aria-labelledby="dithering-kernel-select-label">{ditheringKernels[value]}</Select.Trigger>
+    <Select.Trigger class="w-full" aria-labelledby="dithering-kernel-select-label">
+      {ditheringKernels[value]}
+    </Select.Trigger>
     <Select.Content>
       {#each Object.entries(ditheringKernels) as [kernel, name]}
         <Select.Item value={kernel}>{name}</Select.Item>

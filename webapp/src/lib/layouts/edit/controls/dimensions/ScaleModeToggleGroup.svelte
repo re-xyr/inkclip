@@ -1,28 +1,28 @@
 <script lang="ts">
-  import type { ScaleMode } from '$lib/image/scaler'
+import type { ScaleMode } from '$lib/image/scaler'
 
-  import { Label } from '$lib/components/ui/label'
-  import * as ToggleGroup from '$lib/components/ui/toggle-group'
-  import * as Tooltip from '$lib/components/ui/tooltip'
+import { Label } from '$lib/components/ui/label'
+import * as ToggleGroup from '$lib/components/ui/toggle-group'
+import * as Tooltip from '$lib/components/ui/tooltip'
 
-  import { getConversionConfig } from '$lib/contexts/config.svelte'
+import { getConversionConfig } from '$lib/contexts/config.svelte'
 
-  const config = getConversionConfig()
+const config = getConversionConfig()
 
-  const scaleModes: Record<ScaleMode, { name: string; description: string }> = {
-    fit: {
-      name: 'Fit',
-      description: 'Fit the entire image onto the display. May introduce letterboxing.',
-    },
-    crop: {
-      name: 'Crop',
-      description: 'Fill the display and crop out-of-frame parts of the image.',
-    },
-    distort: {
-      name: 'Distort',
-      description: 'Stretch the image to fill the display. Distorts the aspect ratio.',
-    },
-  }
+const scaleModes: Record<ScaleMode, { name: string; description: string }> = {
+  fit: {
+    name: 'Fit',
+    description: 'Fit the entire image onto the display. May introduce letterboxing.',
+  },
+  crop: {
+    name: 'Crop',
+    description: 'Fill the display and crop out-of-frame parts of the image.',
+  },
+  distort: {
+    name: 'Distort',
+    description: 'Stretch the image to fill the display. Distorts the aspect ratio.',
+  },
+}
 </script>
 
 <div class="stack gap-2">
@@ -30,6 +30,7 @@
 
   <ToggleGroup.Root
     type="single"
+    spacing={1}
     bind:value={
       () => config.scaleMode,
       v => {
