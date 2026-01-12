@@ -1,7 +1,10 @@
 <script lang="ts">
-  import FileSelect from './FileSelect.svelte'
-  import PreviewCanvas1x from './PreviewCanvas1x.svelte'
-  import PreviewCanvas2x from './PreviewCanvas2x.svelte'
+import { MediaQuery } from 'svelte/reactivity'
+import FileSelect from './FileSelect.svelte'
+import PreviewCanvas from './PreviewCanvas.svelte'
+import AdaptivePreviewCanvas from './AdaptivePreviewCanvas.svelte'
+
+const mediaSm = new MediaQuery('min-width: 640px', false)
 </script>
 
 <section class="stack gap-4" aria-labelledby="preview-section-label">
@@ -9,8 +12,12 @@
 
   <FileSelect />
 
-  <div class="stack-h gap-4 max-md:stack">
-    <PreviewCanvas2x />
-    <PreviewCanvas1x />
+  <div class="stack-h flex-wrap gap-4">
+    {#if mediaSm.current}
+      <PreviewCanvas scale={2} />
+      <PreviewCanvas scale={1} />
+    {:else}
+      <AdaptivePreviewCanvas />
+    {/if}
   </div>
 </section>

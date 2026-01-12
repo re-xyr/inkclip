@@ -35,7 +35,7 @@ $effect(() => {
 </script>
 
 <section
-  class="row gap-2 max-lg:stack max-lg:items-stretch"
+  class="flex flex-col lg:flex-row lg:items-center gap-2"
   aria-labelledby="connect-section-label"
 >
   <div class="grow">

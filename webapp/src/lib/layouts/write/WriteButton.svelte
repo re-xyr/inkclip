@@ -59,11 +59,11 @@ async function connectAndWrite() {
     return
   } finally {
     setTimeout(() => {
+      toast.success('Wrote pattern to device')
       inProgress = false
     }, WRITE_TIME)
   }
 
-  toast.success('Wrote pattern to device')
 }
 
 $effect(() => {

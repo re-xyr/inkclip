@@ -18,7 +18,7 @@ export function makeAltText(
 
   const file = filesCtx.files[0]
 
-  const output = [`${DEVICE_WIDTH}-by-${DEVICE_HEIGHT}-pixels e-paper preview of "${file.name}"`]
+  const output = [`${DEVICE_WIDTH}-by-${DEVICE_HEIGHT}-pixel e-paper preview of "${file.name}"`]
 
   if (!imageIsCorrectRatio(imageCtx.image)) {
     if (config.scaleMode === 'fit') output.push('letterboxed')
