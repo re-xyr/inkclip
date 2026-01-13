@@ -15,14 +15,15 @@ let inProgress = $state(false)
   <div class="grow">
     <h2 class="font-semibold text-xl/8" id="write-section-label">Write pattern to device</h2>
 
-    <div class="row gap-1 text-sm" aria-live="polite">
+    <div class="text-sm stack-h gap-1" aria-live="polite">
       {#if imageCtx.image === null}
-        <IconPending aria-hidden /> Select an image file in order to write it onto your device.
+        <IconPending class="mt-0.5 shrink-0" aria-hidden /> Select an image file in order to write it
+        onto your device.
       {:else if !inProgress}
-        <IconArrowUploadProgress aria-hidden /> Write the pattern onto your device if you have finished
-        editing the image.
+        <IconArrowUploadProgress class="mt-0.5 shrink-0" aria-hidden /> Write the pattern onto your device
+        if you have finished editing the image.
       {:else}
-        <IconWarning aria-hidden /> Refresh in progress. Do not disconnect device.
+        <IconWarning class="mt-0.5 shrink-0" aria-hidden /> Refresh in progress. Do not disconnect device.
       {/if}
     </div>
   </div>

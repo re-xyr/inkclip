@@ -9,7 +9,7 @@ import Main from '$lib/layouts/Main.svelte'
 <ModeWatcher />
 <Toaster position="bottom-center" duration={2000} theme={mode.current} invert />
 
-<div class="max-w-7xl min-h-dvh m-auto p-6 stack gap-4">
+<div class="max-w-7xl min-h-dvh m-auto p-6 lg:py-8 stack gap-4">
   <Main />
   <Footer />
 </div>

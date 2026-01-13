@@ -41,11 +41,12 @@ $effect(() => {
   <div class="grow">
     <h2 class="font-semibold text-xl/8" id="connect-section-label">Connect to a device</h2>
 
-    <div class="row gap-1 text-sm" aria-live="polite">
+    <div class="stack-h gap-1 text-sm" aria-live="polite">
       {#if deviceCtx.device === null}
-        <IconPending aria-hidden /> Not connected to any device yet. Plug in your device to connect.
+        <IconPending class="mt-0.5 shrink-0" aria-hidden /> Not connected to any device yet. Plug in your
+        device to connect.
       {:else}
-        <MoreInfo>
+        <MoreInfo class="mt-0.5 shrink-0">
           {#snippet icon()}
             <IconCheckCircle aria-hidden />
           {/snippet}
