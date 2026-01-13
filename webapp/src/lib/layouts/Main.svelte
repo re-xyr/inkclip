@@ -9,16 +9,21 @@ import { createConversionConfig } from '$lib/contexts/config.svelte'
 import { createFilesContext } from '$lib/contexts/files.svelte'
 import { createImageContext } from '$lib/contexts/image.svelte'
 import { createRenderedContext } from '$lib/contexts/rendered.svelte'
+import { createMidiContext } from '$lib/contexts/midi.svelte'
 import { onMount } from 'svelte'
+import PermissionRequestDialog from './dialog/PermissionRequestDialog.svelte'
+import PermissionDeniedDialog from './dialog/PermissionDeniedDialog.svelte'
+import UnsupportedDialog from './dialog/UnsupportedDialog.svelte'
 
-const deviceCtx = createDeviceContext()
+const midiCtx = createMidiContext()
+createDeviceContext(midiCtx)
 const config = createConversionConfig()
 const filesCtx = createFilesContext()
 const imageCtx = createImageContext(filesCtx)
 createRenderedContext(imageCtx, config)
 
-onMount(() => {
-  deviceCtx.initialize()
+onMount(async () => {
+  await midiCtx.initialize()
 })
 </script>
 
@@ -34,4 +39,8 @@ onMount(() => {
   <Separator decorative />
 
   <WriteSection />
+
+  <PermissionRequestDialog open={midiCtx.perm === 'prompt'} />
+  <PermissionDeniedDialog open={midiCtx.perm === 'denied'} />
+  <UnsupportedDialog open={midiCtx.perm === 'unsupported'} />
 </main>
