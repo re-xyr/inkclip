@@ -19,8 +19,8 @@ let { open }: Props = $props()
           We detected that we are denied MIDI access. This means this tool cannot function properly.
         </p>
         <p>
-          To use this tool, you will need to grant us MIDI permission manually in your browser
-          settings, and then reload this page.
+          If you think your browser and system support Web MIDI, you might need to grant us MIDI
+          permission manually in your browser settings, and then reload this page.
         </p>
       </AlertDialog.Description>
     </AlertDialog.Content>

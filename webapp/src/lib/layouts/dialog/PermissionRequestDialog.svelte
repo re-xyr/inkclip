@@ -18,7 +18,7 @@ const midiCtx = getMidiContext()
       <AlertDialog.Title>MIDI permission needed</AlertDialog.Title>
 
       <AlertDialog.Description class="stack gap-2">
-        <p>Write to Inkclip uses the Web MIDI API to talk to your devices.</p>
+        <p>Write to Inkclip uses the Web MIDI API to talk to your device.</p>
         <p>
           Click on "I understand", and then follow your browser's prompt to grant us permission.
         </p>
