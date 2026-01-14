@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "pnpm run generate-pwa-assets && vite build",
+    "preview": "vite preview",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/favicon.svg"
   },
   "devDependencies": {
     "@fontsource-variable/ibm-plex-sans": "^5.2.8",
@@ -20,6 +21,7 @@
     "@types/node": "^24.10.8",
     "@types/w3c-web-hid": "^1.0.6",
     "@variegated-coffee/serde-postcard-ts": "^0.1.4",
+    "@vite-pwa/assets-generator": "^1.0.2",
     "autoprefixer": "^10.4.23",
     "bits-ui": "^2.15.4",
     "clsx": "^2.1.1",
@@ -36,6 +38,7 @@
     "typescript": "^5.9.3",
     "unplugin-icons": "^23.0.1",
     "vite": "^7.3.1",
+    "vite-plugin-pwa": "^1.2.0",
     "wrangler": "^4.59.1"
   },
   "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a"
