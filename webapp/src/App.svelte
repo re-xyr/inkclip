@@ -5,6 +5,10 @@ import { ModeWatcher, mode } from 'mode-watcher'
 import { Toaster } from 'svelte-sonner'
 </script>
 
+<svelte:head>
+  <meta name="theme-color" content={mode.current === 'dark' ? '#141211' : '#ffffff'} />
+</svelte:head>
+
 <ModeWatcher />
 <Toaster position="bottom-center" duration={2000} theme={mode.current} invert />
 
