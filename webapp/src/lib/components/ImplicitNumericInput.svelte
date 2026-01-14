@@ -24,10 +24,9 @@ const size = $derived(Math.max(String(min).length, String(max).length))
     'mx-0.5 rounded-md bg-muted px-1 focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none',
     classNames,
   )}
-  {size}
   maxlength={size}
-  style:field-sizing="content"
   value={showNumber(value)}
+  style="--size: calc({size}ch + 0.5rem)"
   onchange={e => {
     let n = Number(e.currentTarget.value)
 
@@ -44,3 +43,17 @@ const size = $derived(Math.max(String(min).length, String(max).length))
   }}
   {...restProps}
 />
+
+<style>
+@supports (field-sizing: content) {
+  input {
+    field-sizing: content;
+  }
+}
+
+@supports (not (field-sizing: content)) {
+  input {
+    width: var(--size);
+  }
+}
+</style>
