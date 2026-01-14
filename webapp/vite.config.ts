@@ -9,9 +9,10 @@ import { ManifestOptions, VitePWA as pwa } from 'vite-plugin-pwa'
 const manifest: Partial<ManifestOptions> = {
   name: 'Write to Inkclip',
   short_name: 'Inkclip',
-  description: 'Utility for writing images onto the “Inkclip” e-paper accessory.',
-  theme_color: '#afbabc',
+  description: 'Utility for writing patterns to the “Inkclip” e-paper accessory.',
+  categories: ['utilities'],
   display: 'standalone',
+  background_color: '#ffffff',
   icons: [
     {
       src: 'pwa-64x64.png',
