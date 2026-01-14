@@ -1,10 +1,10 @@
-import { getContext, setContext } from 'svelte'
-import type { ImageContext } from './image.svelte'
-import { withTransform } from '$lib/image/transform'
-import type { ConversionConfig } from './config.svelte'
-import { Scaler } from '$lib/image/scaler'
-import { Quantizer } from '$lib/image/quantizer'
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from '$lib/constants'
+import { Quantizer } from '$lib/image/quantizer'
+import { Scaler } from '$lib/image/scaler'
+import { withTransform } from '$lib/image/transform'
+import { getContext, setContext } from 'svelte'
+import type { ConversionConfig } from './config.svelte'
+import type { ImageContext } from './image.svelte'
 
 export class RenderedContext {
   rendered: Uint8Array | null = $state(null)

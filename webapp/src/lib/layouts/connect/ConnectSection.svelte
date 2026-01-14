@@ -1,11 +1,10 @@
 <script lang="ts">
-import IconPending from '~icons/material-symbols/pending'
-import IconCheckCircle from '~icons/material-symbols/check-circle'
-import ConnectButton from './ConnectButton.svelte'
-
-import { getDeviceContext } from '$lib/contexts/device.svelte'
 import MoreInfo from '$lib/components/MoreInfo.svelte'
+import { getDeviceContext } from '$lib/contexts/device.svelte'
 import { assert } from '$lib/utils'
+import IconCheckCircle from '~icons/material-symbols/check-circle'
+import IconPending from '~icons/material-symbols/pending'
+import ConnectButton from './ConnectButton.svelte'
 
 const deviceCtx = getDeviceContext()
 
@@ -35,11 +34,11 @@ $effect(() => {
 </script>
 
 <section
-  class="flex flex-col lg:flex-row lg:items-center gap-2"
+  class="flex flex-col gap-2 lg:flex-row lg:items-center"
   aria-labelledby="connect-section-label"
 >
   <div class="grow">
-    <h2 class="font-semibold text-xl/8" id="connect-section-label">Connect to a device</h2>
+    <h2 class="text-xl/8 font-semibold" id="connect-section-label">Connect to a device</h2>
 
     <div class="stack-h gap-1 text-sm" aria-live="polite">
       {#if deviceCtx.device === null}

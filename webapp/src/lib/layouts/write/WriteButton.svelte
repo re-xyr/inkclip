@@ -1,10 +1,9 @@
 <script lang="ts">
 import { Button } from '$lib/components/ui/button'
-
-import { toast } from 'svelte-sonner'
+import { BYTES_IN_A_ROW, DEVICE_HEIGHT, DEVICE_WIDTH, WRITE_TIME } from '$lib/constants'
 import { getDeviceContext } from '$lib/contexts/device.svelte'
 import { getRenderedContext } from '$lib/contexts/rendered.svelte'
-import { BYTES_IN_A_ROW, DEVICE_HEIGHT, DEVICE_WIDTH, WRITE_TIME } from '$lib/constants'
+import { toast } from 'svelte-sonner'
 
 interface Props {
   onprogress: (inPropgress: boolean) => void
@@ -53,7 +52,14 @@ async function connectAndWrite() {
     const written = Date.now()
     await deviceCtx.device.request({ type: 'UpdateDisplay' })
     const finish = Date.now()
-    console.log('Time (ms): write', written - start, 'update', finish - written, 'total', finish - start)
+    console.log(
+      'Time (ms): write',
+      written - start,
+      'update',
+      finish - written,
+      'total',
+      finish - start,
+    )
   } catch (e) {
     toast.error(`Error writing to device: ${e}`)
     return
@@ -63,7 +69,6 @@ async function connectAndWrite() {
       inProgress = false
     }, WRITE_TIME)
   }
-
 }
 
 $effect(() => {

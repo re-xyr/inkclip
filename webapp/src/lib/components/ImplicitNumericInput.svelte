@@ -1,24 +1,27 @@
 <script lang="ts">
-  import { cn, showNumber } from '$lib/utils'
-  import type { HTMLAttributes } from 'svelte/elements'
+import { cn, showNumber } from '$lib/utils'
+import type { HTMLAttributes } from 'svelte/elements'
 
-  interface Props extends Omit<HTMLAttributes<HTMLInputElement>, 'type' | 'inputmode' | 'onchange' | 'value'> {
-    min: number
-    max: number
-    value: number
-    onchange: (value: number) => void
-  }
+interface Props extends Omit<
+  HTMLAttributes<HTMLInputElement>,
+  'type' | 'inputmode' | 'onchange' | 'value'
+> {
+  min: number
+  max: number
+  value: number
+  onchange: (value: number) => void
+}
 
-  const { min, max, value, onchange, class: classNames, ...restProps }: Props = $props()
+const { min, max, value, onchange, class: classNames, ...restProps }: Props = $props()
 
-  const size = $derived(Math.max(String(min).length, String(max).length))
+const size = $derived(Math.max(String(min).length, String(max).length))
 </script>
 
 <input
   type="text"
   inputmode="numeric"
   class={cn(
-    'bg-muted rounded-md focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-1 focus-visible:ring-offset-2 px-1 mx-0.5',
+    'mx-0.5 rounded-md bg-muted px-1 focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none',
     classNames,
   )}
   {size}

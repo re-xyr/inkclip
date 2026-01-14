@@ -1,20 +1,18 @@
 <script lang="ts">
-import { Transform } from '$lib/image/transform'
-
 import { Button } from '$lib/components/ui/button'
 import Separator from '$lib/components/ui/separator/separator.svelte'
-import IconEditOff from '~icons/material-symbols/edit-off'
-import AspectRatioAlert from './dimensions/AspectRatioAlert.svelte'
-import ScaleModeToggleGroup from './dimensions/ScaleModeToggleGroup.svelte'
-import TransformControls from './dimensions/TransformControls.svelte'
-import BackgroundColorSlider from './BackgroundColorSlider.svelte'
-import DitherControls from './conversion/dither/DitherControls.svelte'
-import ContrastSlider from './conversion/ContrastSlider.svelte'
-import BrightnessSlider from './conversion/BrightnessSlider.svelte'
-
 import { getConversionConfig } from '$lib/contexts/config.svelte'
 import { getImageContext, imageIsCorrectRatio } from '$lib/contexts/image.svelte'
 import { DEFAULT_DITHERING_KERNEL } from '$lib/image/quantizer'
+import { Transform } from '$lib/image/transform'
+import IconEditOff from '~icons/material-symbols/edit-off'
+import BackgroundColorSlider from './BackgroundColorSlider.svelte'
+import BrightnessSlider from './conversion/BrightnessSlider.svelte'
+import ContrastSlider from './conversion/ContrastSlider.svelte'
+import DitherControls from './conversion/dither/DitherControls.svelte'
+import AspectRatioAlert from './dimensions/AspectRatioAlert.svelte'
+import ScaleModeToggleGroup from './dimensions/ScaleModeToggleGroup.svelte'
+import TransformControls from './dimensions/TransformControls.svelte'
 
 const imageCtx = getImageContext()
 const config = getConversionConfig()
@@ -32,14 +30,14 @@ function restoreDefaultImageSettings() {
 }
 </script>
 
-<section class="grow stack gap-4" aria-labelledby="controls-section-label">
-  <h2 class="font-semibold text-xl/6" id="controls-section-label">Edit image</h2>
+<section class="stack grow gap-4" aria-labelledby="controls-section-label">
+  <h2 class="text-xl/6 font-semibold" id="controls-section-label">Edit image</h2>
 
   {#if imageNonSquare}
     <AspectRatioAlert />
   {/if}
 
-  <div class="stack 2xs:row gap-4">
+  <div class="stack gap-4 2xs:row">
     {#if imageNonSquare}
       <ScaleModeToggleGroup />
     {/if}

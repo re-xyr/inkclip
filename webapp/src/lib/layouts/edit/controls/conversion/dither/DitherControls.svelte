@@ -1,19 +1,17 @@
 <script lang="ts">
-  import { DEFAULT_DITHERING_KERNEL, type DitheringKernel } from '$lib/image/quantizer'
+import { getConversionConfig } from '$lib/contexts/config.svelte'
+import { DEFAULT_DITHERING_KERNEL, type DitheringKernel } from '$lib/image/quantizer'
+import DitherSwitch from './DitherSwitch.svelte'
+import DitheringKernelDropdown from './DitheringKernelDropdown.svelte'
 
-  import DitheringKernelDropdown from './DitheringKernelDropdown.svelte'
-  import DitherSwitch from './DitherSwitch.svelte'
+const config = getConversionConfig()
 
-  import { getConversionConfig } from '$lib/contexts/config.svelte'
+let lastDitheringKernel: DitheringKernel = $state(DEFAULT_DITHERING_KERNEL)
 
-  const config = getConversionConfig()
-
-  let lastDitheringKernel: DitheringKernel = $state(DEFAULT_DITHERING_KERNEL)
-
-  $effect(() => {
-    if (config.ditheringKernel === null) return
-    lastDitheringKernel = config.ditheringKernel
-  })
+$effect(() => {
+  if (config.ditheringKernel === null) return
+  lastDitheringKernel = config.ditheringKernel
+})
 </script>
 
 <div class="stack-h gap-4">

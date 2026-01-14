@@ -1,6 +1,5 @@
 <script lang="ts">
 import { Input } from '$lib/components/ui/input'
-
 import { getFilesContext } from '$lib/contexts/files.svelte'
 
 interface Props {
@@ -17,7 +16,7 @@ const filesCtx = getFilesContext()
   type="file"
   accept="image/*"
   bind:files={filesCtx.files}
-  class="font-normal file-input"
+  class="file-input font-normal"
   aria-labelledby="preview-section-label"
 />
 

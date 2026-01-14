@@ -1,18 +1,17 @@
 <script lang="ts">
 import { Separator } from '$lib/components/ui/separator'
+import { createConversionConfig } from '$lib/contexts/config.svelte'
+import { createDeviceContext } from '$lib/contexts/device.svelte'
+import { createFilesContext } from '$lib/contexts/files.svelte'
+import { createImageContext } from '$lib/contexts/image.svelte'
+import { createMidiContext } from '$lib/contexts/midi.svelte'
+import { createRenderedContext } from '$lib/contexts/rendered.svelte'
 import ConnectSection from '$lib/layouts/connect/ConnectSection.svelte'
 import EditSection from '$lib/layouts/edit/EditSection.svelte'
 import WriteSection from '$lib/layouts/write/WriteSection.svelte'
-
-import { createDeviceContext } from '$lib/contexts/device.svelte'
-import { createConversionConfig } from '$lib/contexts/config.svelte'
-import { createFilesContext } from '$lib/contexts/files.svelte'
-import { createImageContext } from '$lib/contexts/image.svelte'
-import { createRenderedContext } from '$lib/contexts/rendered.svelte'
-import { createMidiContext } from '$lib/contexts/midi.svelte'
 import { onMount } from 'svelte'
-import PermissionRequestDialog from './dialog/PermissionRequestDialog.svelte'
 import PermissionDeniedDialog from './dialog/PermissionDeniedDialog.svelte'
+import PermissionRequestDialog from './dialog/PermissionRequestDialog.svelte'
 import UnsupportedDialog from './dialog/UnsupportedDialog.svelte'
 
 const midiCtx = createMidiContext()
@@ -27,7 +26,7 @@ onMount(async () => {
 })
 </script>
 
-<main class="grow w-full stack gap-4">
+<main class="stack w-full grow gap-4">
   <h1 class="sr-only">Write to Inkclip</h1>
 
   <ConnectSection />

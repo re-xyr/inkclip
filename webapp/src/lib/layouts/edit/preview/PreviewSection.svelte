@@ -1,14 +1,14 @@
 <script lang="ts">
 import { MediaQuery } from 'svelte/reactivity'
+import AdaptivePreviewCanvas from './AdaptivePreviewCanvas.svelte'
 import FileSelect from './FileSelect.svelte'
 import PreviewCanvas from './PreviewCanvas.svelte'
-import AdaptivePreviewCanvas from './AdaptivePreviewCanvas.svelte'
 
 const mediaSm = new MediaQuery('min-width: 640px', false)
 </script>
 
 <section class="stack gap-4" aria-labelledby="preview-section-label">
-  <h2 class="font-semibold text-xl/6" id="preview-section-label">Choose an image</h2>
+  <h2 class="text-xl/6 font-semibold" id="preview-section-label">Choose an image</h2>
 
   <FileSelect />
 

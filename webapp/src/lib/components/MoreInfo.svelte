@@ -1,21 +1,20 @@
 <script lang="ts">
-  import type { PopoverTriggerProps } from 'bits-ui'
-  import type { Snippet } from 'svelte'
+import * as Popover from '$lib/components/ui/popover'
+import type { PopoverTriggerProps } from 'bits-ui'
+import type { Snippet } from 'svelte'
+import IconInfo from '~icons/material-symbols/info'
 
-  import IconInfo from '~icons/material-symbols/info'
-  import * as Popover from '$lib/components/ui/popover'
+interface Props extends PopoverTriggerProps {
+  icon?: Snippet
+}
 
-  interface Props extends PopoverTriggerProps {
-    icon?: Snippet
-  }
-
-  const { icon, children, ...restProps }: Props = $props()
+const { icon, children, ...restProps }: Props = $props()
 </script>
 
 <Popover.Root>
   <Popover.Trigger aria-label="More info" {...restProps}>
     {#if !icon}
-      <IconInfo class="text-muted-foreground text-sm" aria-hidden />
+      <IconInfo class="text-sm text-muted-foreground" aria-hidden />
     {:else}
       {@render icon()}
     {/if}

@@ -1,7 +1,7 @@
-import { getContext, setContext } from 'svelte'
-import type { FilesContext } from './files.svelte'
-import { toast } from 'svelte-sonner'
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from '$lib/constants'
+import { getContext, setContext } from 'svelte'
+import { toast } from 'svelte-sonner'
+import type { FilesContext } from './files.svelte'
 
 export interface ImageContext {
   image: ImageBitmap | null

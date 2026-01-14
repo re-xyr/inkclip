@@ -45,6 +45,16 @@ export default class RgbQuant {
   palette(tuples: true, noSort?: boolean = false): Rgb[]
   palette(tuples: false, noSort?: boolean = false): Uint8Array
   palette(): Uint8Array
-  reduce(image: RgbQuantImage, retType: 1, dithKern?: DitheringKernel | null, dithSerp?: boolean): Uint8Array
-  reduce(image: RgbQuantImage, retType: 2, dithKern?: DitheringKernel | null, dithSerp?: boolean): number[]
+  reduce(
+    image: RgbQuantImage,
+    retType: 1,
+    dithKern?: DitheringKernel | null,
+    dithSerp?: boolean,
+  ): Uint8Array
+  reduce(
+    image: RgbQuantImage,
+    retType: 2,
+    dithKern?: DitheringKernel | null,
+    dithSerp?: boolean,
+  ): number[]
 }

@@ -1,8 +1,8 @@
 import { Device } from '$lib/image/device'
+import { effect } from '$lib/utils.svelte'
 import { getContext, setContext } from 'svelte'
 import { toast } from 'svelte-sonner'
 import type { MidiContext } from './midi.svelte'
-import { effect } from '$lib/utils.svelte'
 
 function isInkclip(port: MIDIPort): boolean {
   return !!(

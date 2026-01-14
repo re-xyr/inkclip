@@ -1,14 +1,13 @@
 <script lang="ts">
 import { Label } from '$lib/components/ui/label'
-import IconHideImage from '~icons/material-symbols/hide-image'
-
-import { cn } from '$lib/utils'
-import { drawQuantizedData, freshContext, makeAltText } from './common.svelte'
-import { getRenderedContext } from '$lib/contexts/rendered.svelte'
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from '$lib/constants'
-import { getFilesContext } from '$lib/contexts/files.svelte'
 import { getConversionConfig } from '$lib/contexts/config.svelte'
+import { getFilesContext } from '$lib/contexts/files.svelte'
 import { getImageContext } from '$lib/contexts/image.svelte'
+import { getRenderedContext } from '$lib/contexts/rendered.svelte'
+import { cn } from '$lib/utils'
+import IconHideImage from '~icons/material-symbols/hide-image'
+import { drawQuantizedData, freshContext, makeAltText } from './common.svelte'
 
 const filesCtx = getFilesContext()
 const imageCtx = getImageContext()
@@ -26,9 +25,9 @@ $effect(() => {
 })
 </script>
 
-<div class="bg-[#ccc] shadow-md rounded-lg p-2 w-full aspect-square relative" role="group">
+<div class="relative aspect-square w-full rounded-lg bg-[#ccc] p-2 shadow-md" role="group">
   <div
-    class="inset-shadow-sm inset-shadow-stone-400 p-1 size-full"
+    class="size-full p-1 inset-shadow-sm inset-shadow-stone-400"
     role="img"
     aria-label={makeAltText(filesCtx, imageCtx, config)}
   >
@@ -41,7 +40,7 @@ $effect(() => {
         width={DEVICE_WIDTH}
       ></canvas>
     {:else}
-      <div class="col justify-center text-[#333] size-full">
+      <div class="col size-full justify-center text-[#333]">
         <IconHideImage class="text-5xl" aria-label="No image" />
       </div>
     {/if}

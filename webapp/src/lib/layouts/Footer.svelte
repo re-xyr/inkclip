@@ -1,9 +1,8 @@
 <script lang="ts">
 import { Button } from '$lib/components/ui/button'
-import IconLightMode from '~icons/material-symbols/light-mode'
-import IconDarkMode from '~icons/material-symbols/dark-mode'
-
 import { mode, toggleMode } from 'mode-watcher'
+import IconDarkMode from '~icons/material-symbols/dark-mode'
+import IconLightMode from '~icons/material-symbols/light-mode'
 </script>
 
 <footer class="row text-sm text-muted-foreground">

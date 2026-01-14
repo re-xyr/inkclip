@@ -1,14 +1,13 @@
 <script lang="ts">
-  import { Label } from '$lib/components/ui/label'
-  import { Slider } from '$lib/components/ui/slider'
-  import MoreInfo from '$lib/components/MoreInfo.svelte'
-  import ImplicitNumericInput from '$lib/components/ImplicitNumericInput.svelte'
+import ImplicitNumericInput from '$lib/components/ImplicitNumericInput.svelte'
+import MoreInfo from '$lib/components/MoreInfo.svelte'
+import { Label } from '$lib/components/ui/label'
+import { Slider } from '$lib/components/ui/slider'
+import { getConversionConfig } from '$lib/contexts/config.svelte'
 
-  import { getConversionConfig } from '$lib/contexts/config.svelte'
+const config = getConversionConfig()
 
-  const config = getConversionConfig()
-
-  let value = $derived(config.backgroundColor)
+let value = $derived(config.backgroundColor)
 </script>
 
 <div class="stack gap-4" role="group" aria-labelledby="background-color-input-label">

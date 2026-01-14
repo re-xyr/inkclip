@@ -1,11 +1,9 @@
 <script lang="ts">
-import type { ScaleMode } from '$lib/image/scaler'
-
 import { Label } from '$lib/components/ui/label'
 import * as ToggleGroup from '$lib/components/ui/toggle-group'
 import * as Tooltip from '$lib/components/ui/tooltip'
-
 import { getConversionConfig } from '$lib/contexts/config.svelte'
+import type { ScaleMode } from '$lib/image/scaler'
 
 const config = getConversionConfig()
 

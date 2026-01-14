@@ -1,10 +1,8 @@
 <script lang="ts">
-import { type DitheringKernel } from '$lib/image/quantizer'
-
+import MoreInfo from '$lib/components/MoreInfo.svelte'
 import { Label } from '$lib/components/ui/label'
 import * as Select from '$lib/components/ui/select'
-import MoreInfo from '$lib/components/MoreInfo.svelte'
-
+import { type DitheringKernel } from '$lib/image/quantizer'
 import { cn } from '$lib/utils'
 
 interface Props {
@@ -29,7 +27,7 @@ const ditheringKernels: Record<DitheringKernel, string> = {
 </script>
 
 <div
-  class={cn('grow stack gap-2', hidden ? ['invisible'] : [])}
+  class={cn('stack grow gap-2', hidden ? ['invisible'] : [])}
   role="group"
   aria-labelledby="dithering-kernel-select-label"
 >

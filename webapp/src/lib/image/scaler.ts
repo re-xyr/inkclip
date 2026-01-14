@@ -10,7 +10,10 @@ export type ScaleMode = 'fit' | 'crop' | 'distort'
 export class Scaler {
   private readonly canvasAspectRatio: number
 
-  constructor(private readonly canvasWidth: number, private readonly canvasHeight: number) {
+  constructor(
+    private readonly canvasWidth: number,
+    private readonly canvasHeight: number,
+  ) {
     this.canvasAspectRatio = canvasWidth / canvasHeight
   }
 

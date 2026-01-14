@@ -124,7 +124,7 @@
   }
 
   ::selection {
-    @apply text-muted bg-muted-foreground;
+    @apply bg-muted-foreground text-muted;
   }
 
   a {

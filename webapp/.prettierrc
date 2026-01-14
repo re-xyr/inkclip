@@ -6,7 +6,15 @@
   "singleQuote": true,
   "printWidth": 100,
   "plugins": [
-    "prettier-plugin-svelte"
+    "prettier-plugin-svelte",
+    "prettier-plugin-tailwindcss",
+    "@ianvs/prettier-plugin-sort-imports"
   ],
-  "svelteIndentScriptAndStyle": false
+  "svelteIndentScriptAndStyle": false,
+  "tailwindStylesheet": "./src/app.css",
+  "tailwindFunctions": ["clsx", "twMerge", "cn"],
+  "importOrder": ["<BUILTIN_MODULES>", "<THIRD_PARTY_MODULES>", "^~icons/", "^$lib/", "^[./]"],
+  "importOrderParserPlugins": ["typescript"],
+  "importOrderTypeScriptVersion": "5.9.2",
+  "importOrderCaseSensitive": true
 }

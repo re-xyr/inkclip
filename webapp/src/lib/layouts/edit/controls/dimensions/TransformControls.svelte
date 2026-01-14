@@ -1,42 +1,40 @@
 <script lang="ts">
-  import type { Operation } from '$lib/image/transform'
+import { Button } from '$lib/components/ui/button'
+import { Label } from '$lib/components/ui/label'
+import * as Tooltip from '$lib/components/ui/tooltip'
+import { getConversionConfig } from '$lib/contexts/config.svelte'
+import type { Operation } from '$lib/image/transform'
+import IconRotate90DegreesCcw from '~icons/material-symbols/rotate-90-degrees-ccw'
+import IconRotate90DegreesCw from '~icons/material-symbols/rotate-90-degrees-cw'
+import IconFlipVertical from '~icons/mdi/flip-Vertical'
+import IconFlipHorizontal from '~icons/mdi/flip-horizontal'
 
-  import IconRotate90DegreesCw from '~icons/material-symbols/rotate-90-degrees-cw'
-  import IconRotate90DegreesCcw from '~icons/material-symbols/rotate-90-degrees-ccw'
-  import IconFlipHorizontal from '~icons/mdi/flip-horizontal'
-  import IconFlipVertical from '~icons/mdi/flip-Vertical'
-  import { Button } from '$lib/components/ui/button'
-  import { Label } from '$lib/components/ui/label'
-  import * as Tooltip from '$lib/components/ui/tooltip'
+interface Props {
+  disabled?: boolean
+}
 
-  import { getConversionConfig } from '$lib/contexts/config.svelte'
+const { disabled = false }: Props = $props()
 
-  interface Props {
-    disabled?: boolean
-  }
+const config = getConversionConfig()
 
-  const { disabled = false }: Props = $props()
-
-  const config = getConversionConfig()
-
-  const operations = {
-    cw: {
-      icon: IconRotate90DegreesCw,
-      description: 'Rotate 90° clockwise',
-    },
-    ccw: {
-      icon: IconRotate90DegreesCcw,
-      description: 'Rotate 90° counter-clockwise',
-    },
-    h: {
-      icon: IconFlipHorizontal,
-      description: 'Flip horizontally',
-    },
-    v: {
-      icon: IconFlipVertical,
-      description: 'Flip vertically',
-    },
-  }
+const operations = {
+  cw: {
+    icon: IconRotate90DegreesCw,
+    description: 'Rotate 90° clockwise',
+  },
+  ccw: {
+    icon: IconRotate90DegreesCcw,
+    description: 'Rotate 90° counter-clockwise',
+  },
+  h: {
+    icon: IconFlipHorizontal,
+    description: 'Flip horizontally',
+  },
+  v: {
+    icon: IconFlipVertical,
+    description: 'Flip vertically',
+  },
+}
 </script>
 
 <div class="stack gap-2">

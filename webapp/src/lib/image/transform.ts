@@ -11,7 +11,10 @@ export type Operation = 'cw' | 'ccw' | 'h' | 'v'
  * Algebraically, this is the dihedral group of order 8 (D₄).
  */
 export class Transform {
-  constructor(public readonly side: Side = 'obverse', public readonly rotation: Rotation = 0) {}
+  constructor(
+    public readonly side: Side = 'obverse',
+    public readonly rotation: Rotation = 0,
+  ) {}
 
   cw(): Transform {
     const rotationAngle = this.side === 'obverse' ? 90 : 270
@@ -67,6 +70,6 @@ export function withTransform<T>(ctx: Context2D, transform: Transform, action: (
       ctx.rotate((transform.rotation / 180) * Math.PI)
       ctx.translate(-centerX, -centerY)
     },
-    action
+    action,
   )
 }

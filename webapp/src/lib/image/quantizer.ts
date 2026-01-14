@@ -1,5 +1,4 @@
-import RgbQuant from '$lib/vendor/rgbquant'
-import type { DitheringKernel, RgbQuantImage } from '$lib/vendor/rgbquant'
+import RgbQuant, { type DitheringKernel, type RgbQuantImage } from '$lib/vendor/rgbquant'
 
 export type { DitheringKernel, RgbQuantImage } from '$lib/vendor/rgbquant'
 

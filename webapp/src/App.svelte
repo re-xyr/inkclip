@@ -1,15 +1,14 @@
 <script lang="ts">
-import { mode, ModeWatcher } from 'mode-watcher'
-import { Toaster } from 'svelte-sonner'
-
 import Footer from '$lib/layouts/Footer.svelte'
 import Main from '$lib/layouts/Main.svelte'
+import { ModeWatcher, mode } from 'mode-watcher'
+import { Toaster } from 'svelte-sonner'
 </script>
 
 <ModeWatcher />
 <Toaster position="bottom-center" duration={2000} theme={mode.current} invert />
 
-<div class="max-w-7xl min-h-dvh m-auto p-6 lg:py-8 stack gap-4">
+<div class="m-auto stack min-h-dvh max-w-7xl gap-4 p-6 lg:py-8">
   <Main />
   <Footer />
 </div>

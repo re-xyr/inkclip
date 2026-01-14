@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { Switch } from '$lib/components/ui/switch'
-  import { Label } from '$lib/components/ui/label'
-  import MoreInfo from '$lib/components/MoreInfo.svelte'
+import MoreInfo from '$lib/components/MoreInfo.svelte'
+import { Label } from '$lib/components/ui/label'
+import { Switch } from '$lib/components/ui/switch'
 
-  interface Props {
-    checked: boolean
-    onchange: (checked: boolean) => void
-  }
+interface Props {
+  checked: boolean
+  onchange: (checked: boolean) => void
+}
 
-  let { checked, onchange }: Props = $props()
+let { checked, onchange }: Props = $props()
 </script>
 
 <div class="stack gap-2" role="group" aria-labelledby="dither-switch-label">
@@ -17,7 +17,7 @@
     <MoreInfo>Dithering uses different dot densities to simulate shades of gray.</MoreInfo>
   </div>
 
-  <div class="grow row items-center">
+  <div class="row grow items-center">
     <Switch {checked} onCheckedChange={onchange} aria-labelledby="dither-switch-label" />
   </div>
 </div>
