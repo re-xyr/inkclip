@@ -35,7 +35,7 @@ $effect(() => {
 </script>
 
 <section aria-labelledby="connect-section-label">
-  <div class="mx-6 mt-6 mb-4 stack gap-2 lg:row xl:mx-0">
+  <div class="mx-6 mt-6 mb-4 stack gap-2 md:row xl:mx-0">
     <div class="grow">
       <h2 class="text-xl/8 font-semibold" id="connect-section-label">Connect to a device</h2>
 

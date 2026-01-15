@@ -14,7 +14,7 @@ let inProgress = $state(false)
 <section aria-labelledby="write-section-label">
   <Separator decorative />
 
-  <div class="mx-6 mt-4 mb-6 stack gap-2 lg:row xl:mx-0">
+  <div class="mx-6 mt-4 mb-6 stack gap-2 md:row xl:mx-0">
     <div class="grow">
       <h2 class="text-xl/8 font-semibold" id="write-section-label">Write pattern to device</h2>
 
