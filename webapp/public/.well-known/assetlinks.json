@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "at.nightcord.inkclip.twa",
+      "sha256_cert_fingerprints": [
+        "B4:48:E2:E3:32:0D:FA:1B:C3:94:7D:F7:0D:03:6B:E4:6C:79:B4:AA:A6:07:F6:3C:AF:BE:1E:B0:FA:65:29:0B"
+      ]
+    }
+  }
+]
