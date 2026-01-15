@@ -8,7 +8,7 @@ const mediaLg = new MediaQuery('min-width: 1024px')
 const separatorOrientation = $derived(mediaLg.current ? 'vertical' : 'horizontal')
 </script>
 
-<div class="flex grow flex-col gap-4 lg:flex-row">
+<div class="mx-6 flex grow flex-col gap-4 lg:flex-row xl:mx-0">
   <PreviewSection />
 
   <Separator decorative orientation={separatorOrientation} />

@@ -12,7 +12,7 @@ import { Toaster } from 'svelte-sonner'
 <ModeWatcher />
 <Toaster position="bottom-center" duration={2000} theme={mode.current} invert />
 
-<div class="m-auto stack min-h-dvh max-w-7xl gap-4 p-6 lg:py-8">
+<div class="m-auto stack min-h-dvh max-w-[calc(var(--container-7xl)-2*6*var(--spacing))]">
   <Main />
   <Footer />
 </div>

@@ -30,13 +30,7 @@ onMount(async () => {
   <h1 class="sr-only">Write to Inkclip</h1>
 
   <ConnectSection />
-
-  <Separator decorative />
-
   <EditSection />
-
-  <Separator decorative />
-
   <WriteSection />
 
   <PermissionRequestDialog open={midiCtx.perm === 'prompt'} />

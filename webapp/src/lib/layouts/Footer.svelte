@@ -5,7 +5,7 @@ import IconDarkMode from '~icons/material-symbols/dark-mode'
 import IconLightMode from '~icons/material-symbols/light-mode'
 </script>
 
-<footer class="row text-sm text-muted-foreground">
+<footer class="mx-6 mb-6 row text-sm text-muted-foreground xl:mx-0">
   <div class="grow">
     {new Date().getFullYear()} &copy;
     <a class="no-underline hover:underline" href="https://dayli.ly">daylily</a>
