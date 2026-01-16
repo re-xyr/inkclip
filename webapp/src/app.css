@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
-@import '@fontsource-variable/ibm-plex-sans';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -75,7 +74,10 @@
 }
 
 @theme inline {
-  --font-sans: 'IBM Plex Sans Variable', 'IBM Plex Sans', 'Fira Sans', sans-serif;
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
   --breakpoint-2xs: 24rem;
   --breakpoint-xs: 32rem;
   --radius-sm: calc(var(--radius) - 4px);

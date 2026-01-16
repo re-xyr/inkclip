@@ -10,7 +10,6 @@
     "generate-pwa-assets": "pwa-assets-generator"
   },
   "devDependencies": {
-    "@fontsource-variable/ibm-plex-sans": "^5.2.8",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@iconify/json": "^2.2.428",
     "@internationalized/date": "^3.10.1",
