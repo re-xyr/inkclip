@@ -2,7 +2,7 @@
 import MoreInfo from '$lib/components/MoreInfo.svelte'
 import { Separator } from '$lib/components/ui/separator'
 import { getDeviceContext } from '$lib/contexts/device.svelte'
-import { assert } from '$lib/utils'
+import { assert, cn } from '$lib/utils'
 import IconCheckCircle from '~icons/material-symbols/check-circle'
 import IconPending from '~icons/material-symbols/pending'
 import ConnectButton from './ConnectButton.svelte'
@@ -37,7 +37,15 @@ $effect(() => {
 <section aria-labelledby="connect-section-label">
   <div class="mx-6 mt-6 mb-4 stack gap-2 md:row xl:mx-0">
     <div class="grow">
-      <h2 class="text-xl/8 font-semibold" id="connect-section-label">Connect to a device</h2>
+      <h2
+        class={cn(
+          'text-xl/8 font-semibold transition-all',
+          !deviceCtx.device || 'font-normal opacity-50',
+        )}
+        id="connect-section-label"
+      >
+        Connect to a device
+      </h2>
 
       <div class="stack-h gap-1 text-sm" aria-live="polite">
         {#if deviceCtx.device === null}

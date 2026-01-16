@@ -1,11 +1,14 @@
 <script lang="ts">
 import { Separator } from '$lib/components/ui/separator'
+import { getDeviceContext } from '$lib/contexts/device.svelte'
 import { getImageContext } from '$lib/contexts/image.svelte'
+import { cn } from '$lib/utils'
 import IconArrowUploadProgress from '~icons/material-symbols/arrow-upload-progress'
 import IconPending from '~icons/material-symbols/pending'
 import IconWarning from '~icons/material-symbols/warning'
 import WriteButton from './WriteButton.svelte'
 
+const deviceCtx = getDeviceContext()
 const imageCtx = getImageContext()
 
 let inProgress = $state(false)
@@ -16,7 +19,15 @@ let inProgress = $state(false)
 
   <div class="mx-6 mt-4 mb-6 stack gap-2 md:row xl:mx-0">
     <div class="grow">
-      <h2 class="text-xl/8 font-semibold" id="write-section-label">Write pattern to device</h2>
+      <h2
+        class={cn(
+          'text-xl/8 font-semibold transition-all',
+          (deviceCtx.device && imageCtx.image) || 'font-normal opacity-50',
+        )}
+        id="write-section-label"
+      >
+        Write pattern to device
+      </h2>
 
       <div class="stack-h gap-1 text-sm" aria-live="polite">
         {#if imageCtx.image === null}
@@ -36,11 +47,9 @@ let inProgress = $state(false)
 </section>
 
 <style>
-/* @media (display-mode: standalone) { */
 section {
   position: sticky;
   bottom: 0;
   background: var(--color-background);
 }
-/* } */
 </style>

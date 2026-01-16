@@ -2,9 +2,12 @@
 import { Button } from '$lib/components/ui/button'
 import Separator from '$lib/components/ui/separator/separator.svelte'
 import { getConversionConfig } from '$lib/contexts/config.svelte'
+import { getDeviceContext } from '$lib/contexts/device.svelte'
+import { getFilesContext } from '$lib/contexts/files.svelte'
 import { getImageContext, imageIsCorrectRatio } from '$lib/contexts/image.svelte'
 import { DEFAULT_DITHERING_KERNEL } from '$lib/image/quantizer'
 import { Transform } from '$lib/image/transform'
+import { cn } from 'tailwind-variants'
 import IconEditOff from '~icons/material-symbols/edit-off'
 import BackgroundColorSlider from './BackgroundColorSlider.svelte'
 import BrightnessSlider from './conversion/BrightnessSlider.svelte'
@@ -15,6 +18,8 @@ import ScaleModeToggleGroup from './dimensions/ScaleModeToggleGroup.svelte'
 import TransformControls from './dimensions/TransformControls.svelte'
 
 const imageCtx = getImageContext()
+const deviceCtx = getDeviceContext()
+const filesCtx = getFilesContext()
 const config = getConversionConfig()
 
 const transformDisabled = $derived(imageCtx.image === null)
@@ -31,7 +36,15 @@ function restoreDefaultImageSettings() {
 </script>
 
 <section class="stack grow gap-4" aria-labelledby="controls-section-label">
-  <h2 class="text-xl/6 font-semibold" id="controls-section-label">Edit image</h2>
+  <h2
+    class={cn(
+      'text-xl/6 font-semibold transition-all',
+      filesCtx.files.length || 'font-normal opacity-50',
+    )}
+    id="controls-section-label"
+  >
+    Edit image
+  </h2>
 
   {#if imageNonSquare}
     <AspectRatioAlert />
