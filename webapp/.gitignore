@@ -25,7 +25,5 @@ dist-ssr
 *.sw?
 
 # Generated assets
-public/apple-touch-icon*.png
 public/favicon.ico
-public/pwa*.png
-public/maskable-icon*.png
+public/icon*.png

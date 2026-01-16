@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg width="512" height="512" viewBox="0 0 512 512" version="1.1" id="svg1"
+<svg width="540" height="540" viewBox="-14 -14 540 540" version="1.1" id="svg1"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:svg="http://www.w3.org/2000/svg">
     <style>
-    .fg { fill: #5a536b; }
-    .fg-stroke { fill: none; stroke: #5a536b; }
-    .bg { fill: #ffffff; }
-    @media (prefers-color-scheme: dark) {
-        .fg { fill: #ffffff; }
-        .fg-stroke { fill: none; stroke: #ffffff; }
-        .bg { fill: #5a536b; }
+    .fg { fill: #ffffff; }
+    .fg-stroke { fill: none; stroke: #ffffff; }
+    .bg { fill: #0c0a09; }
+    @media (prefers-color-scheme: light) {
+        .fg { fill: #0c0a09; }
+        .fg-stroke { fill: none; stroke: #0c0a09; }
+        .bg { fill: #ffffff; }
     }
     </style>
+    <rect class="bg" width="512" height="512" x="0" y="0" />
     <rect class="fg-stroke" stroke-width="64" width="448" height="448" x="32" y="32" />
     <circle class="fg" cx="64" cy="448" r="64" />
     <circle class="fg" cx="64" cy="320" r="64" />

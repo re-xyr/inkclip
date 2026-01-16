@@ -6,7 +6,7 @@ import { Toaster } from 'svelte-sonner'
 </script>
 
 <svelte:head>
-  <meta name="theme-color" content={mode.current === 'dark' ? '#141211' : '#ffffff'} />
+  <meta name="theme-color" content={mode.current === 'dark' ? '#0c0a09' : '#ffffff'} />
 </svelte:head>
 
 <ModeWatcher />
