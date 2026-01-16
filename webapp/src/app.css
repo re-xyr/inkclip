@@ -122,8 +122,8 @@
     @apply border-border outline-ring/50;
   }
 
-  body {
-    @apply bg-background text-foreground;
+  :root {
+    @apply touch-pan-x touch-pan-y bg-background text-foreground;
   }
 
   ::selection {
